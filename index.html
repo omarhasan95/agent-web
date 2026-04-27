@@ -110,7 +110,7 @@
         border-radius: 36px;
         background: var(--bg-accent);
         color: white;
-        padding: 28px;
+        padding: 22px 24px;
         box-shadow: var(--shadow);
       }
 
@@ -143,9 +143,22 @@
         position: relative;
         z-index: 1;
         display: grid;
-        grid-template-columns: 1.65fr 1fr;
-        gap: 20px;
+        grid-template-columns: 1.15fr 1fr;
+        gap: 16px;
         align-items: stretch;
+      }
+
+      .top-strip {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 14px;
+        align-items: start;
+        margin-bottom: 16px;
+      }
+
+      .header-stack {
+        display: grid;
+        gap: 10px;
       }
 
       .hero-kicker {
@@ -164,17 +177,17 @@
       }
 
       .hero-title {
-        margin: 16px 0 10px;
-        font-size: clamp(32px, 5vw, 58px);
-        line-height: 1.02;
+        margin: 0;
+        font-size: clamp(24px, 3vw, 34px);
+        line-height: 1.04;
         letter-spacing: 0;
       }
 
       .hero-copy {
-        max-width: 760px;
+        max-width: 720px;
         margin: 0;
-        font-size: 16px;
-        line-height: 1.7;
+        font-size: 14px;
+        line-height: 1.6;
         color: rgba(255, 255, 255, 0.84);
       }
 
@@ -182,7 +195,29 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 22px;
+        margin-top: 14px;
+      }
+
+      .clock-card {
+        display: grid;
+        gap: 6px;
+        min-width: 270px;
+        padding: 14px 16px;
+        border-radius: 22px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        backdrop-filter: blur(18px);
+      }
+
+      .clock-time {
+        font-size: clamp(26px, 4vw, 34px);
+        font-weight: 800;
+        line-height: 1;
+      }
+
+      .clock-meta {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.78);
       }
 
       .pill-button,
@@ -496,6 +531,73 @@
         box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
       }
 
+      .report-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .print-button {
+        padding: 12px 16px;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--emerald), #14b8a6);
+        color: white;
+        font-weight: 700;
+        box-shadow: 0 14px 26px rgba(16, 185, 129, 0.22);
+      }
+
+      .report-table {
+        min-width: 1780px;
+      }
+
+      .report-table th,
+      .report-table td {
+        padding: 10px 12px;
+        font-size: 12px;
+      }
+
+      .report-table thead tr:first-child th {
+        background: rgba(59, 130, 246, 0.11);
+        color: var(--text);
+      }
+
+      .report-table thead tr:nth-child(2) th,
+      .report-table thead tr:nth-child(3) th {
+        background: rgba(148, 163, 184, 0.1);
+      }
+
+      .report-table td:first-child,
+      .report-table th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: var(--bg-strong);
+      }
+
+      .mini-tabs {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+
+      .mini-tab {
+        padding: 9px 12px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.08);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        color: rgba(255, 255, 255, 0.88);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .mini-tab.active {
+        background: white;
+        color: #0f172a;
+      }
+
       .chart-frame {
         display: grid;
         gap: 14px;
@@ -797,6 +899,7 @@
 
       @media (max-width: 1180px) {
         .hero-grid,
+        .top-strip,
         .doughnut-wrap,
         .toolbar,
         .metric-grid,
@@ -843,6 +946,47 @@
         .control-cluster,
         .split-header {
           justify-content: flex-start;
+        }
+      }
+
+      @media print {
+        body {
+          background: white !important;
+          color: black !important;
+        }
+
+        .hero,
+        .metric-grid,
+        .status-panel,
+        .tab-group,
+        .toolbar,
+        .report-actions,
+        .mini-tabs,
+        .notice,
+        .icon-button,
+        .solid-button,
+        .small-button,
+        .pill-button,
+        .ghost-button {
+          display: none !important;
+        }
+
+        .surface,
+        .patient-table-wrap,
+        .report-table td:first-child,
+        .report-table th:first-child {
+          background: white !important;
+          box-shadow: none !important;
+          border-color: #d1d5db !important;
+        }
+
+        .page,
+        .analytics-grid {
+          display: block !important;
+        }
+
+        .span-12.surface:last-of-type {
+          break-inside: avoid;
         }
       }
     </style>
@@ -901,10 +1045,9 @@
 
       function formatAge(hours) {
         if (hours === null || hours < 0) return "Invalid";
-        if (hours < 24) return `DOL 1 (${Math.floor(hours)}h)`;
         const days = Math.floor(hours / 24);
         const rem = Math.floor(hours % 24);
-        return `DOL ${days + 1} (${days}d ${rem}h)`;
+        return `DOL ${days + 1} | ${days}d ${rem}h`;
       }
 
       function formatDateLabel(value) {
@@ -917,6 +1060,23 @@
         const date = toDate(value);
         if (!date) return "—";
         return date.toLocaleDateString(undefined, { day: "2-digit", month: "short" });
+      }
+
+      function formatClock(value) {
+        return value.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+      }
+
+      function formatDayDate(value) {
+        return value.toLocaleDateString(undefined, {
+          weekday: "long",
+          day: "2-digit",
+          month: "long",
+          year: "numeric"
+        });
+      }
+
+      function getOutcomeHours(patient) {
+        return diffHours(patient.dob, patient.outcomeDate);
       }
 
       function average(values) {
@@ -1156,9 +1316,20 @@
         );
       }
 
+      function ClockCard({ now }) {
+        return (
+          <div className="clock-card">
+            <div className="metric-eyebrow" style={{ color: "rgba(255,255,255,0.74)" }}>Ward Time</div>
+            <div className="clock-time">{formatClock(now)}</div>
+            <div className="clock-meta">{formatDayDate(now)}</div>
+          </div>
+        );
+      }
+
       function App() {
         const [theme, setTheme] = useTheme();
         const [viewMode, setViewMode] = useState("overview");
+        const [now, setNow] = useState(new Date());
         const [patients, setPatients] = useState([]);
         const [searchQuery, setSearchQuery] = useState("");
         const [filterStatus, setFilterStatus] = useState("All");
@@ -1182,6 +1353,11 @@
         });
 
         const firebaseRef = React.useRef(null);
+
+        useEffect(() => {
+          const timer = window.setInterval(() => setNow(new Date()), 1000);
+          return () => window.clearInterval(timer);
+        }, []);
 
         useEffect(() => {
           let unsubscribeAuth = null;
@@ -1319,11 +1495,36 @@
               const date = toDate(patient.outcomeDate);
               return date && date.getMonth() === item.month && date.getFullYear() === item.year;
             });
+            const nicuAdmissions = admitted.filter(patient => patient.unit === "NICU");
+            const sncuAdmissions = admitted.filter(patient => patient.unit === "SNCU");
+            const deaths = outcomes.filter(patient => patient.status === "Died");
+            const deathsByDiagnosis = DIAGNOSIS_OPTIONS.reduce((acc, diagnosis) => {
+              acc[diagnosis] = deaths.filter(patient => (patient.diagnosis || "Others") === diagnosis).length;
+              return acc;
+            }, {});
+            const deathTimings = {
+              lt24: deaths.filter(patient => {
+                const hours = getOutcomeHours(patient);
+                return hours !== null && hours < 24;
+              }).length,
+              d1to7: deaths.filter(patient => {
+                const hours = getOutcomeHours(patient);
+                return hours !== null && hours >= 24 && hours <= 24 * 7;
+              }).length,
+              d8to28: deaths.filter(patient => {
+                const hours = getOutcomeHours(patient);
+                return hours !== null && hours > 24 * 7 && hours <= 24 * 28;
+              }).length,
+              gt28: deaths.filter(patient => {
+                const hours = getOutcomeHours(patient);
+                return hours !== null && hours > 24 * 28;
+              }).length
+            };
             return {
               month: `${item.label} ${String(item.year).slice(-2)}`,
               admissions: admitted.length,
-              nicu: admitted.filter(patient => patient.unit === "NICU").length,
-              sncu: admitted.filter(patient => patient.unit === "SNCU").length,
+              nicu: nicuAdmissions.length,
+              sncu: sncuAdmissions.length,
               discharged: outcomes.filter(patient => patient.status === "Discharged").length,
               death: outcomes.filter(patient => patient.status === "Died").length,
               lama: outcomes.filter(patient => patient.status === "LAMA").length,
@@ -1331,7 +1532,26 @@
               active: patients.filter(patient => {
                 const date = toDate(patient.admissionDate);
                 return patient.status === "Admitted" && date && date.getMonth() === item.month && date.getFullYear() === item.year;
-              }).length
+              }).length,
+              detail: {
+                nicuDirect: nicuAdmissions.filter(patient => (patient.admissionType || "Direct") === "Direct").length,
+                sncuTransferIn: sncuAdmissions.filter(patient => ["Transfer in", "Referral", "Outborn"].includes(patient.admissionType || "")).length,
+                totalAdmissions: admitted.length,
+                nicuDeathTA: nicuAdmissions.length,
+                nicuDeathCount: deaths.filter(patient => patient.unit === "NICU").length,
+                sncuDeathTA: sncuAdmissions.length,
+                sncuDeathCount: deaths.filter(patient => patient.unit === "SNCU").length,
+                nicuDischargeTA: nicuAdmissions.length,
+                nicuDischargeCount: outcomes.filter(patient => patient.unit === "NICU" && patient.status === "Discharged").length,
+                sncuDischargeTA: sncuAdmissions.length,
+                sncuDischargeCount: outcomes.filter(patient => patient.unit === "SNCU" && patient.status === "Discharged").length,
+                lamaTA: admitted.length,
+                lamaCount: outcomes.filter(patient => patient.status === "LAMA").length,
+                transferTA: admitted.length,
+                transferCount: outcomes.filter(patient => patient.status === "Transferred").length,
+                deathsByDiagnosis,
+                deathTimings
+              }
             };
           });
 
@@ -1429,19 +1649,34 @@
           <div className="app-shell">
             <div className="page">
               <section className="hero fade-in">
-                <div className="hero-grid">
-                  <div>
+                <div className="top-strip">
+                  <div className="header-stack">
                     <div className="hero-kicker">
                       <Icon size={16} stroke="white"><path d="M3 12h4l2.5-5 4 10 2.5-5H21"></path></Icon>
                       Rajendra Institute of Medical Sciences
                     </div>
-                    <h1 className="hero-title">A live NICU dashboard that feels current, readable, and operational.</h1>
-                    <p className="hero-copy">
-                      Track neonatal admissions, outcome flow, diagnosis mix, and monthly movement from one Material-inspired command surface with live Firebase sync.
-                    </p>
+                    <div>
+                      <h1 className="hero-title">RIMS NICU Tracker</h1>
+                      <p className="hero-copy">
+                        Live registry, DOL-based patient tracking, outcomes, printable monthly mortality reporting, and ward analytics in one organized surface.
+                      </p>
+                    </div>
+                    <div className="mini-tabs">
+                      {VIEW_MODES.map(mode => (
+                        <button key={mode} className={`mini-tab ${viewMode === mode ? "active" : ""}`} onClick={() => setViewMode(mode)}>
+                          {mode === "overview" ? "Overview" : mode === "tracker" ? "Live Tracker" : "Monthly Report"}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                  <ClockCard now={now} />
+                </div>
+                <div className="hero-grid">
+                  <div>
                     <div className="hero-actions">
-                      <button className="pill-button" onClick={() => setViewMode("tracker")}>Open Tracker Workspace</button>
-                      <button className="ghost-button" onClick={() => setViewMode("reports")}>Open Monthly Reporting</button>
+                      <button className="pill-button" onClick={() => setViewMode("tracker")}>Open Tracker</button>
+                      <button className="ghost-button" onClick={() => setViewMode("reports")}>Open Monthly Table</button>
+                      <button className="ghost-button" onClick={() => window.print()}>Print Monthly Report</button>
                     </div>
                   </div>
 
@@ -1486,7 +1721,7 @@
                     <div className="split-header">
                       <div>
                         <h2 className="panel-title">Clinical snapshot</h2>
-                        <p className="panel-copy">Material-style cards for the numbers you need first.</p>
+                        <p className="panel-copy">Overview, tracker, and monthly reporting arranged so the most useful information stays visible first.</p>
                       </div>
                       <div className="tab-group">
                         {VIEW_MODES.map(mode => (
@@ -1588,16 +1823,20 @@
                   <div className="surface-inner">
                     <div className="split-header">
                       <div>
-                        <h3 className="panel-title">{viewMode === "reports" ? "Monthly report table" : "Patient workspace"}</h3>
+                        <h3 className="panel-title">{viewMode === "reports" ? "Printable monthly report table" : "Patient workspace"}</h3>
                         <p className="panel-copy">
                           {viewMode === "reports"
-                            ? "Rolling monthly figures for admissions, outcomes, and active load."
-                            : "Search, filter, review, and update individual patient records."}
+                            ? "Detailed month-wise admissions, deaths, discharge, LAMA, transfer out, cause of death, and death timing."
+                            : "Search, filter, review, and update individual patient records with DOL shown in days and hours."}
                         </p>
                       </div>
-                      {viewMode !== "reports" && (
-                        <button className="solid-button" onClick={openNewModal}>Add patient</button>
-                      )}
+                      <div className="report-actions">
+                        {viewMode === "reports" ? (
+                          <button className="print-button" onClick={() => window.print()}>Print This Report</button>
+                        ) : (
+                          <button className="solid-button" onClick={openNewModal}>Add patient</button>
+                        )}
+                      </div>
                     </div>
 
                     {viewMode !== "reports" && (
@@ -1623,32 +1862,79 @@
 
                     {viewMode === "reports" ? (
                       <div className="patient-table-wrap">
-                        <table>
+                        <table className="report-table">
                           <thead>
                             <tr>
-                              <th>Month</th>
-                              <th>Admissions</th>
-                              <th>NICU</th>
-                              <th>SNCU</th>
-                              <th>Discharged</th>
-                              <th>Deaths</th>
-                              <th>LAMA</th>
-                              <th>Transferred</th>
-                              <th>Active</th>
+                              <th rowSpan="3">Month</th>
+                              <th colSpan="3">Total No of Admission (NICU + SNCU)</th>
+                              <th colSpan="4">Total No of Death</th>
+                              <th colSpan="4">Discharge</th>
+                              <th colSpan="2">LAMA</th>
+                              <th colSpan="2">Transfer Out</th>
+                              <th colSpan="5">Cause of Death (T.A / Death)</th>
+                              <th colSpan="4">Death Timing</th>
+                            </tr>
+                            <tr>
+                              <th rowSpan="2">NICU Direct</th>
+                              <th rowSpan="2">SNCU Transfer in</th>
+                              <th rowSpan="2">Total</th>
+                              <th colSpan="2">NICU</th>
+                              <th colSpan="2">SNCU</th>
+                              <th colSpan="2">NICU</th>
+                              <th colSpan="2">SNCU</th>
+                              <th rowSpan="2">T.A</th>
+                              <th rowSpan="2">Death</th>
+                              <th rowSpan="2">T.A</th>
+                              <th rowSpan="2">Death</th>
+                              <th rowSpan="2">Pre Term</th>
+                              <th rowSpan="2">Severe Birth Asphyxia</th>
+                              <th rowSpan="2">SEPSIS</th>
+                              <th rowSpan="2">RDS</th>
+                              <th rowSpan="2">Others</th>
+                              <th rowSpan="2">&lt;24 hrs</th>
+                              <th rowSpan="2">24h - 7d</th>
+                              <th rowSpan="2">8d - 28d</th>
+                              <th rowSpan="2">&gt;28d</th>
+                            </tr>
+                            <tr>
+                              <th>T.A</th>
+                              <th>Death</th>
+                              <th>T.A</th>
+                              <th>Death</th>
+                              <th>T.A</th>
+                              <th>Death</th>
+                              <th>T.A</th>
+                              <th>Death</th>
                             </tr>
                           </thead>
                           <tbody>
                             {analytics.reportRows.map(row => (
                               <tr key={row.month}>
                                 <td className="patient-name">{row.month}</td>
-                                <td>{row.admissions}</td>
-                                <td>{row.nicu}</td>
-                                <td>{row.sncu}</td>
-                                <td>{row.discharged}</td>
-                                <td>{row.death}</td>
-                                <td>{row.lama}</td>
-                                <td>{row.transferred}</td>
-                                <td>{row.active}</td>
+                                <td>{row.detail.nicuDirect}</td>
+                                <td>{row.detail.sncuTransferIn}</td>
+                                <td>{row.detail.totalAdmissions}</td>
+                                <td>{row.detail.nicuDeathTA}</td>
+                                <td>{row.detail.nicuDeathCount}</td>
+                                <td>{row.detail.sncuDeathTA}</td>
+                                <td>{row.detail.sncuDeathCount}</td>
+                                <td>{row.detail.nicuDischargeTA}</td>
+                                <td>{row.detail.nicuDischargeCount}</td>
+                                <td>{row.detail.sncuDischargeTA}</td>
+                                <td>{row.detail.sncuDischargeCount}</td>
+                                <td>{row.detail.lamaTA}</td>
+                                <td>{row.detail.lamaCount}</td>
+                                <td>{row.detail.transferTA}</td>
+                                <td>{row.detail.transferCount}</td>
+                                <td>{row.detail.deathsByDiagnosis["Pre Term"]}</td>
+                                <td>{row.detail.deathsByDiagnosis["Severe Birth Asphyxia"]}</td>
+                                <td>{row.detail.deathsByDiagnosis["SEPSIS"]}</td>
+                                <td>{row.detail.deathsByDiagnosis["RDS"]}</td>
+                                <td>{row.detail.deathsByDiagnosis["Others"]}</td>
+                                <td>{row.detail.deathTimings.lt24}</td>
+                                <td>{row.detail.deathTimings.d1to7}</td>
+                                <td>{row.detail.deathTimings.d8to28}</td>
+                                <td>{row.detail.deathTimings.gt28}</td>
                               </tr>
                             ))}
                           </tbody>
