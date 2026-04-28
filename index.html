@@ -73,6 +73,14 @@
         transition: background 240ms ease, color 240ms ease;
       }
 
+      html {
+        color-scheme: light;
+      }
+
+      body.dark {
+        color-scheme: dark;
+      }
+
       button,
       input,
       select,
@@ -771,6 +779,10 @@
         font-size: 12px;
       }
 
+      .report-table th {
+        position: static;
+      }
+
       .report-table thead tr:first-child th {
         background: rgba(59, 130, 246, 0.11);
         color: var(--text);
@@ -997,6 +1009,40 @@
         transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
       }
 
+      .field[type="date"],
+      .field[type="datetime-local"],
+      .select-field {
+        appearance: none;
+        -webkit-appearance: none;
+      }
+
+      .field[type="date"],
+      .field[type="datetime-local"] {
+        color-scheme: light;
+      }
+
+      body.dark .field[type="date"],
+      body.dark .field[type="datetime-local"] {
+        color-scheme: dark;
+      }
+
+      .select-field {
+        padding-right: 42px;
+        background-image:
+          linear-gradient(45deg, transparent 50%, var(--text-soft) 50%),
+          linear-gradient(135deg, var(--text-soft) 50%, transparent 50%);
+        background-position:
+          calc(100% - 20px) calc(50% - 3px),
+          calc(100% - 14px) calc(50% - 3px);
+        background-size: 6px 6px, 6px 6px;
+        background-repeat: no-repeat;
+      }
+
+      .select-field option {
+        color: var(--text);
+        background: var(--bg-strong);
+      }
+
       .field:focus,
       .select-field:focus,
       .textarea-field:focus {
@@ -1013,6 +1059,7 @@
         overflow: auto;
         border-radius: 18px;
         border: 1px solid var(--line);
+        -webkit-overflow-scrolling: touch;
       }
 
       table {
@@ -1034,6 +1081,34 @@
         text-transform: uppercase;
         color: var(--text-faint);
         background: rgba(148, 163, 184, 0.08);
+        position: sticky;
+        top: 0;
+        z-index: 2;
+      }
+
+      .table-header-button {
+        width: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+        padding: 0;
+        background: transparent;
+        color: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        letter-spacing: inherit;
+        text-transform: inherit;
+      }
+
+      .table-header-button:hover,
+      .table-header-button:focus-visible {
+        color: var(--text);
+      }
+
+      .sort-indicator {
+        font-size: 11px;
+        letter-spacing: 0;
       }
 
       tbody tr {
@@ -1091,11 +1166,12 @@
 
       .modal {
         width: min(860px, 100%);
+        max-height: min(92vh, 980px);
         border-radius: 22px;
         background: var(--bg-elevated);
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
-        overflow: hidden;
+        overflow: auto;
       }
 
       .modal-head,
@@ -1144,6 +1220,129 @@
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
+      }
+
+      .table-toolbar {
+        display: grid;
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+
+      .table-meta {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+
+      .table-meta-copy {
+        font-size: 13px;
+        color: var(--text-soft);
+      }
+
+      .filter-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .filter-pill {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 9px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: var(--bg-strong);
+        color: var(--text-soft);
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      .filter-pill.active {
+        border-color: rgba(125, 196, 248, 0.58);
+        background: linear-gradient(135deg, rgba(244, 174, 203, 0.18), rgba(157, 223, 248, 0.2));
+        color: var(--text);
+      }
+
+      .filter-pill-count {
+        min-width: 22px;
+        height: 22px;
+        padding: 0 6px;
+        border-radius: 999px;
+        display: inline-grid;
+        place-items: center;
+        background: rgba(148, 163, 184, 0.12);
+        color: var(--text);
+      }
+
+      .pagination {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 16px;
+      }
+
+      .pagination-controls {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .page-indicator {
+        font-size: 13px;
+        color: var(--text-soft);
+      }
+
+      .mobile-patient-list {
+        display: none;
+      }
+
+      .mobile-patient-card {
+        display: grid;
+        gap: 14px;
+        padding: 16px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: var(--bg-strong);
+        box-shadow: var(--shadow-soft);
+      }
+
+      .mobile-patient-top,
+      .mobile-patient-grid,
+      .mobile-patient-actions {
+        display: grid;
+        gap: 10px;
+      }
+
+      .mobile-patient-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .mobile-patient-field {
+        display: grid;
+        gap: 4px;
+      }
+
+      .mobile-patient-field span {
+        font-size: 11px;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--text-faint);
+      }
+
+      .report-hint {
+        font-size: 13px;
+        color: var(--text-soft);
+      }
+
+      .mobile-nav {
+        display: none;
       }
 
       .notice {
@@ -1278,6 +1477,48 @@
         .hero-actions {
           justify-content: stretch;
         }
+
+        .toolbar,
+        .table-meta {
+          grid-template-columns: 1fr;
+        }
+
+        .toolbar {
+          display: grid;
+        }
+
+        .patient-table-wrap.desktop-table {
+          display: none;
+        }
+
+        .mobile-patient-list {
+          display: grid;
+          gap: 14px;
+        }
+
+        .mobile-nav {
+          position: sticky;
+          bottom: 12px;
+          z-index: 20;
+          display: grid;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+          gap: 8px;
+          padding: 8px;
+          border-radius: 20px;
+          background: rgba(255, 255, 255, 0.92);
+          border: 1px solid var(--line);
+          box-shadow: var(--shadow);
+          backdrop-filter: blur(14px);
+        }
+
+        body.dark .mobile-nav {
+          background: rgba(31, 40, 61, 0.92);
+        }
+
+        .mobile-nav .mini-tab {
+          justify-content: center;
+          min-height: 44px;
+        }
       }
 
       @media print {
@@ -1309,6 +1550,10 @@
           background: white !important;
           box-shadow: none !important;
           border-color: #d1d5db !important;
+        }
+
+        th {
+          position: static !important;
         }
 
         .page,
@@ -1352,6 +1597,8 @@
       const VIEW_MODES = ["overview", "tracker", "reports"];
       const CHART_RANGES = ["day", "month", "year"];
       const SUMMARY_RANGES = ["day", "month", "year"];
+      const DISPLAY_LOCALE = "en-GB";
+      const TRACKER_PAGE_SIZES = [10, 25, 50];
 
       function useTheme() {
         const [theme, setTheme] = useState(() => localStorage.getItem("nicu-theme") || "light");
@@ -1387,13 +1634,13 @@
       function formatDateLabel(value) {
         const date = toDate(value);
         if (!date) return "Unavailable";
-        return date.toLocaleDateString(undefined, { day: "2-digit", month: "short", year: "numeric" });
+        return date.toLocaleDateString(DISPLAY_LOCALE, { day: "2-digit", month: "short", year: "numeric" });
       }
 
       function formatShortDate(value) {
         const date = toDate(value);
         if (!date) return "—";
-        return date.toLocaleDateString(undefined, { day: "2-digit", month: "short" });
+        return date.toLocaleDateString(DISPLAY_LOCALE, { day: "2-digit", month: "2-digit", year: "numeric" });
       }
 
       function formatClock(value) {
@@ -1401,7 +1648,7 @@
       }
 
       function formatDayDate(value) {
-        return value.toLocaleDateString(undefined, {
+        return value.toLocaleDateString(DISPLAY_LOCALE, {
           weekday: "long",
           day: "2-digit",
           month: "long",
@@ -1450,7 +1697,7 @@
           const cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
           days.push({
             key: cursor.toISOString().slice(0, 10),
-            label: cursor.toLocaleDateString(undefined, { day: "2-digit", month: "short" }),
+            label: cursor.toLocaleDateString(DISPLAY_LOCALE, { day: "2-digit", month: "short" }),
             day: cursor.getDate(),
             month: cursor.getMonth(),
             year: cursor.getFullYear()
@@ -1481,11 +1728,81 @@
         };
       }
 
+      function sortPatients(patients, config) {
+        const direction = config.direction === "asc" ? 1 : -1;
+        return [...patients].sort((a, b) => {
+          const getValue = patient => {
+            switch (config.key) {
+              case "name":
+                return (patient.name || "").toLowerCase();
+              case "uhid":
+                return (patient.uhid || "").toLowerCase();
+              case "sex":
+                return (patient.sex || "").toLowerCase();
+              case "unit":
+                return (patient.unit || "").toLowerCase();
+              case "diagnosis":
+                return (patient.diagnosis || "").toLowerCase();
+              case "status":
+                return STATUS_ORDER.indexOf(patient.status || "Admitted");
+              case "age":
+                return diffHours(
+                  patient.dob,
+                  patient.status === "Admitted" ? new Date().toISOString() : patient.outcomeDate
+                ) || 0;
+              case "outcomeDate":
+                return toDate(patient.outcomeDate)?.getTime() || 0;
+              case "admissionDate":
+              default:
+                return toDate(patient.admissionDate)?.getTime() || 0;
+            }
+          };
+
+          const left = getValue(a);
+          const right = getValue(b);
+
+          if (typeof left === "string" || typeof right === "string") {
+            return String(left).localeCompare(String(right), DISPLAY_LOCALE) * direction;
+          }
+
+          return (left - right) * direction;
+        });
+      }
+
+      function downloadCsv(filename, rows) {
+        const escape = value => `"${String(value ?? "").replace(/"/g, '""')}"`;
+        const csv = rows.map(row => row.map(escape).join(",")).join("\n");
+        const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const anchor = document.createElement("a");
+        anchor.href = url;
+        anchor.download = filename;
+        anchor.click();
+        URL.revokeObjectURL(url);
+      }
+
       function Icon({ children, size = 20, stroke = "currentColor" }) {
         return (
           <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={stroke} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             {children}
           </svg>
+        );
+      }
+
+      function SortHeader({ label, sortKey, sortConfig, onSort, title }) {
+        const isActive = sortConfig.key === sortKey;
+        const direction = isActive ? (sortConfig.direction === "asc" ? "↑" : "↓") : "↕";
+        return (
+          <button
+            type="button"
+            className="table-header-button"
+            onClick={() => onSort(sortKey)}
+            title={title || `Sort by ${label}`}
+            aria-label={title || `Sort by ${label}`}
+          >
+            <span>{label}</span>
+            <span className="sort-indicator" aria-hidden="true">{direction}</span>
+          </button>
         );
       }
 
@@ -1709,6 +2026,9 @@
         const [patients, setPatients] = useState([]);
         const [searchQuery, setSearchQuery] = useState("");
         const [filterStatus, setFilterStatus] = useState("All");
+        const [sortConfig, setSortConfig] = useState({ key: "admissionDate", direction: "desc" });
+        const [pageSize, setPageSize] = useState(25);
+        const [currentPage, setCurrentPage] = useState(1);
         const [user, setUser] = useState(null);
         const [isSyncing, setIsSyncing] = useState(true);
         const [connectionError, setConnectionError] = useState("");
@@ -1803,20 +2123,25 @@
 
         const filteredPatients = useMemo(() => {
           const query = searchQuery.toLowerCase().trim();
-          return [...patients]
+          return sortPatients(
+            patients
             .filter(patient => {
               if (filterStatus !== "All" && patient.status !== filterStatus) return false;
               if (!query) return true;
               return [patient.name, patient.uhid, patient.sex, patient.unit, patient.diagnosis, patient.notes]
                 .filter(Boolean)
                 .some(value => String(value).toLowerCase().includes(query));
-            })
-            .sort((a, b) => {
-              const aDate = toDate(a.admissionDate)?.getTime() || 0;
-              const bDate = toDate(b.admissionDate)?.getTime() || 0;
-              return bDate - aDate;
-            });
-        }, [patients, searchQuery, filterStatus]);
+            }),
+            sortConfig
+          );
+        }, [patients, searchQuery, filterStatus, sortConfig]);
+
+        const totalPages = Math.max(1, Math.ceil(filteredPatients.length / pageSize));
+
+        const paginatedPatients = useMemo(() => {
+          const start = (currentPage - 1) * pageSize;
+          return filteredPatients.slice(start, start + pageSize);
+        }, [filteredPatients, currentPage, pageSize]);
 
         const analytics = useMemo(() => {
           const now = new Date();
@@ -2060,9 +2385,23 @@
             if (reportYearFilter !== "All" && String(row.year) !== reportYearFilter) return false;
             if (reportMonthFilter !== "All" && row.monthLabel !== reportMonthFilter) return false;
             return true;
+          }).sort((a, b) => {
+            const left = new Date(a.year, a.monthIndex, 1).getTime();
+            const right = new Date(b.year, b.monthIndex, 1).getTime();
+            return right - left;
           }),
           [analytics.reportRows, reportMonthFilter, reportYearFilter]
         );
+
+        useEffect(() => {
+          setCurrentPage(1);
+        }, [searchQuery, filterStatus, pageSize]);
+
+        useEffect(() => {
+          if (currentPage > totalPages) {
+            setCurrentPage(totalPages);
+          }
+        }, [currentPage, totalPages]);
 
         const resetForm = () => {
           setEditingPatient(null);
@@ -2137,6 +2476,73 @@
           if (!firebaseRef.current?.db) return;
           if (!window.confirm("Delete this patient record?")) return;
           await firebaseRef.current.db.collection("patients").doc(patientId).delete();
+        };
+
+        const handleSort = key => {
+          setSortConfig(current => ({
+            key,
+            direction: current.key === key && current.direction === "asc" ? "desc" : "asc"
+          }));
+        };
+
+        const exportMonthlyReport = () => {
+          const header = [
+            "Month",
+            "NICU Direct",
+            "SNCU Transfer In",
+            "Total Admissions",
+            "NICU Total Admissions",
+            "NICU Deaths",
+            "SNCU Total Admissions",
+            "SNCU Deaths",
+            "NICU Total Admissions for Discharge",
+            "NICU Discharges",
+            "SNCU Total Admissions for Discharge",
+            "SNCU Discharges",
+            "LAMA Total Admissions",
+            "LAMA Count",
+            "Transfer Total Admissions",
+            "Transfer Count",
+            "Pre Term Deaths",
+            "Severe Birth Asphyxia Deaths",
+            "SEPSIS Deaths",
+            "RDS Deaths",
+            "Other Deaths",
+            "Deaths <24 hrs",
+            "Deaths 24h-7d",
+            "Deaths 8d-28d",
+            "Deaths >28d"
+          ];
+
+          const rows = filteredReportRows.map(row => [
+            row.month,
+            row.detail.nicuDirect,
+            row.detail.sncuTransferIn,
+            row.detail.totalAdmissions,
+            row.detail.nicuDeathTA,
+            row.detail.nicuDeathCount,
+            row.detail.sncuDeathTA,
+            row.detail.sncuDeathCount,
+            row.detail.nicuDischargeTA,
+            row.detail.nicuDischargeCount,
+            row.detail.sncuDischargeTA,
+            row.detail.sncuDischargeCount,
+            row.detail.lamaTA,
+            row.detail.lamaCount,
+            row.detail.transferTA,
+            row.detail.transferCount,
+            row.detail.deathsByDiagnosis["Pre Term"],
+            row.detail.deathsByDiagnosis["Severe Birth Asphyxia"],
+            row.detail.deathsByDiagnosis["SEPSIS"],
+            row.detail.deathsByDiagnosis["RDS"],
+            row.detail.deathsByDiagnosis["Others"],
+            row.detail.deathTimings.lt24,
+            row.detail.deathTimings.d1to7,
+            row.detail.deathTimings.d8to28,
+            row.detail.deathTimings.gt28
+          ]);
+
+          downloadCsv("rims-nicu-monthly-report.csv", [header, ...rows]);
         };
 
         return (
@@ -2353,7 +2759,10 @@
                       </div>
                       <div className="report-actions">
                         {viewMode === "reports" ? (
-                          <button type="button" className="print-button" onClick={() => window.print()}>Print This Report</button>
+                          <>
+                            <button type="button" className="small-button" onClick={exportMonthlyReport}>Export CSV</button>
+                            <button type="button" className="print-button" onClick={printReportView}>Print This Report</button>
+                          </>
                         ) : (
                           <button type="button" className="solid-button" onClick={openNewModal}>Add patient</button>
                         )}
@@ -2361,23 +2770,58 @@
                     </div>
 
                     {viewMode !== "reports" && (
-                      <div className="toolbar" style={{ marginBottom: 18 }}>
-                        <input
-                          className="field"
-                          type="search"
-                          placeholder="Search by patient name, UHID, sex, unit, diagnosis, or note"
-                          value={searchQuery}
-                          onChange={event => setSearchQuery(event.target.value)}
-                        />
-                        <select className="select-field" value={filterStatus} onChange={event => setFilterStatus(event.target.value)}>
-                          <option value="All">All statuses</option>
-                          {STATUS_ORDER.map(status => (
-                            <option key={status} value={status}>{STATUS_META[status].label}</option>
-                          ))}
-                        </select>
-                        <button type="button" className="small-button" onClick={() => setViewMode(viewMode === "overview" ? "tracker" : "overview") }>
-                          {viewMode === "overview" ? "Focus Tracker" : "Back to Overview"}
-                        </button>
+                      <div className="table-toolbar">
+                        <div className="toolbar">
+                          <input
+                            className="field"
+                            type="search"
+                            placeholder="Search by patient name, UHID, sex, unit, diagnosis, or note"
+                            value={searchQuery}
+                            onChange={event => setSearchQuery(event.target.value)}
+                          />
+                          <select className="select-field" value={filterStatus} onChange={event => setFilterStatus(event.target.value)}>
+                            <option value="All">All statuses</option>
+                            {STATUS_ORDER.map(status => (
+                              <option key={status} value={status}>{STATUS_META[status].label}</option>
+                            ))}
+                          </select>
+                          <button type="button" className="small-button" onClick={() => setViewMode(viewMode === "overview" ? "tracker" : "overview") }>
+                            {viewMode === "overview" ? "Focus Tracker" : "Back to Overview"}
+                          </button>
+                        </div>
+                        <div className="table-meta">
+                          <div className="table-meta-copy">
+                            Showing {filteredPatients.length === 0 ? 0 : (currentPage - 1) * pageSize + 1}-{Math.min(currentPage * pageSize, filteredPatients.length)} of {filteredPatients.length} filtered patients.
+                          </div>
+                          <div className="pagination-controls">
+                            <span className="meta-text">Rows per page</span>
+                            <select className="select-field" value={String(pageSize)} onChange={event => setPageSize(Number(event.target.value))} style={{ width: 120 }}>
+                              {TRACKER_PAGE_SIZES.map(size => (
+                                <option key={size} value={String(size)}>{size}</option>
+                              ))}
+                            </select>
+                          </div>
+                        </div>
+                        <div className="filter-pills" aria-label="Quick status filters">
+                          <button type="button" className={`filter-pill ${filterStatus === "All" ? "active" : ""}`} onClick={() => setFilterStatus("All")}>
+                            <span>All</span>
+                            <span className="filter-pill-count">{patients.length}</span>
+                          </button>
+                          {STATUS_ORDER.map(status => {
+                            const count = patients.filter(patient => patient.status === status).length;
+                            return (
+                              <button
+                                key={status}
+                                type="button"
+                                className={`filter-pill ${filterStatus === status ? "active" : ""}`}
+                                onClick={() => setFilterStatus(status)}
+                              >
+                                <span>{STATUS_META[status].label}</span>
+                                <span className="filter-pill-count">{count}</span>
+                              </button>
+                            );
+                          })}
+                        </div>
                       </div>
                     )}
 
@@ -2400,6 +2844,9 @@
                             Clear report filters
                           </button>
                         </div>
+                        <div className="report-hint">
+                          Scroll sideways to review the full table, export it as CSV, or print the filtered view.
+                        </div>
                       <div className="patient-table-wrap">
                         <table className="report-table">
                           <thead>
@@ -2421,9 +2868,9 @@
                               <th colSpan="2">SNCU</th>
                               <th colSpan="2">NICU</th>
                               <th colSpan="2">SNCU</th>
-                              <th rowSpan="2">T.A</th>
+                              <th rowSpan="2"><abbr title="Total admissions">T.A</abbr></th>
                               <th rowSpan="2">Death</th>
-                              <th rowSpan="2">T.A</th>
+                              <th rowSpan="2"><abbr title="Total admissions">T.A</abbr></th>
                               <th rowSpan="2">Death</th>
                               <th rowSpan="2">Pre Term</th>
                               <th rowSpan="2">Severe Birth Asphyxia</th>
@@ -2436,13 +2883,13 @@
                               <th rowSpan="2">&gt;28d</th>
                             </tr>
                             <tr>
-                              <th>T.A</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
-                              <th>T.A</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
-                              <th>T.A</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
-                              <th>T.A</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
                             </tr>
                           </thead>
@@ -2487,19 +2934,20 @@
                       </div>
                       </>
                     ) : (
-                      <div className="patient-table-wrap">
+                      <>
+                      <div className="patient-table-wrap desktop-table">
                         <table>
                           <thead>
                             <tr>
-                              <th>Patient</th>
-                              <th>UHID</th>
-                              <th>Sex</th>
-                              <th>Unit</th>
-                              <th>Diagnosis</th>
-                              <th>Age</th>
-                              <th>Status</th>
-                              <th>Admission</th>
-                              <th>Outcome</th>
+                              <th><SortHeader label="Patient" sortKey="name" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="UHID" sortKey="uhid" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Sex" sortKey="sex" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Unit" sortKey="unit" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Diagnosis" sortKey="diagnosis" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Age" sortKey="age" sortConfig={sortConfig} onSort={handleSort} title="Sort by calculated age in hours" /></th>
+                              <th><SortHeader label="Status" sortKey="status" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Admission" sortKey="admissionDate" sortConfig={sortConfig} onSort={handleSort} /></th>
+                              <th><SortHeader label="Outcome" sortKey="outcomeDate" sortConfig={sortConfig} onSort={handleSort} /></th>
                               <th>Actions</th>
                             </tr>
                           </thead>
@@ -2513,7 +2961,7 @@
                                 <td colSpan="10" className="empty-state">No patient records match the current filters.</td>
                               </tr>
                             ) : (
-                              filteredPatients.map(patient => {
+                              paginatedPatients.map(patient => {
                                 const hours = diffHours(
                                   patient.dob,
                                   patient.status === "Admitted" ? new Date().toISOString() : patient.outcomeDate
@@ -2545,10 +2993,72 @@
                           </tbody>
                         </table>
                       </div>
+                      <div className="mobile-patient-list">
+                        {isSyncing ? (
+                          <div className="mobile-patient-card empty-state">Connecting to live tracker...</div>
+                        ) : filteredPatients.length === 0 ? (
+                          <div className="mobile-patient-card empty-state">No patient records match the current filters.</div>
+                        ) : (
+                          paginatedPatients.map(patient => {
+                            const hours = diffHours(
+                              patient.dob,
+                              patient.status === "Admitted" ? new Date().toISOString() : patient.outcomeDate
+                            );
+                            return (
+                              <article key={patient.id} className="mobile-patient-card">
+                                <div className="mobile-patient-top">
+                                  <div>
+                                    <div className="patient-name">{patient.name || "Unnamed patient"}</div>
+                                    <div className="meta-text">{patient.uhid || "No UHID"} • {patient.admissionType || "Direct"}</div>
+                                  </div>
+                                  <StatusBadge status={patient.status} />
+                                </div>
+                                <div className="mobile-patient-grid">
+                                  <div className="mobile-patient-field"><span>Sex</span><strong>{patient.sex || "—"}</strong></div>
+                                  <div className="mobile-patient-field"><span>Unit</span><strong>{patient.unit || "NICU"}</strong></div>
+                                  <div className="mobile-patient-field"><span>Diagnosis</span><strong>{patient.diagnosis || "Others"}</strong></div>
+                                  <div className="mobile-patient-field"><span>Age</span><strong>{formatAge(hours)}</strong></div>
+                                  <div className="mobile-patient-field"><span>Admission</span><strong>{formatShortDate(patient.admissionDate)}</strong></div>
+                                  <div className="mobile-patient-field"><span>Outcome</span><strong>{patient.outcomeDate ? formatShortDate(patient.outcomeDate) : "—"}</strong></div>
+                                </div>
+                                <div className="mobile-patient-actions">
+                                  <button type="button" className="small-button" onClick={() => openEditModal(patient)}>Edit</button>
+                                  <button type="button" className="small-button danger" onClick={() => deletePatient(patient.id)}>Delete</button>
+                                </div>
+                              </article>
+                            );
+                          })
+                        )}
+                      </div>
+                      <div className="pagination">
+                        <div className="page-indicator">Page {totalPages === 0 ? 0 : currentPage} of {totalPages}</div>
+                        <div className="pagination-controls">
+                          <button type="button" className="small-button" onClick={() => setCurrentPage(page => Math.max(1, page - 1))} disabled={currentPage === 1}>
+                            Previous
+                          </button>
+                          <button type="button" className="small-button" onClick={() => setCurrentPage(page => Math.min(totalPages, page + 1))} disabled={currentPage >= totalPages}>
+                            Next
+                          </button>
+                        </div>
+                      </div>
+                      </>
                     )}
                   </div>
                 </div>
               </section>
+
+              <div className="mobile-nav" aria-label="Mobile section navigation">
+                {VIEW_MODES.map(mode => (
+                  <button
+                    key={mode}
+                    type="button"
+                    className={`mini-tab ${viewMode === mode ? "active" : ""}`}
+                    onClick={() => openWorkspaceView(mode)}
+                  >
+                    {mode === "overview" ? "Overview" : mode === "tracker" ? "Tracker" : "Reports"}
+                  </button>
+                ))}
+              </div>
 
               {isModalOpen && (
                 <div className="modal-backdrop" onClick={closeModal}>
