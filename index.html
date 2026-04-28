@@ -22,41 +22,41 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <style>
       :root {
-        --bg: #f5f7fb;
-        --bg-elevated: rgba(255, 255, 255, 0.94);
+        --bg: #fff6fb;
+        --bg-elevated: rgba(255, 255, 255, 0.92);
         --bg-strong: #ffffff;
-        --bg-soft: #edf1f7;
-        --bg-accent: #0f172a;
-        --text: #0f172a;
-        --text-soft: #526073;
-        --text-faint: #73839b;
-        --line: rgba(148, 163, 184, 0.22);
-        --line-strong: rgba(148, 163, 184, 0.32);
-        --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
-        --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.05);
-        --blue: #3b82f6;
-        --indigo: #2563eb;
-        --cyan: #06b6d4;
-        --emerald: #10b981;
-        --amber: #f59e0b;
-        --rose: #f43f5e;
-        --violet: #8b5cf6;
+        --bg-soft: #eef7ff;
+        --bg-accent: #7586bd;
+        --text: #314258;
+        --text-soft: #6b7a92;
+        --text-faint: #8795ae;
+        --line: rgba(181, 197, 228, 0.42);
+        --line-strong: rgba(160, 183, 221, 0.52);
+        --shadow: 0 18px 42px rgba(152, 176, 214, 0.18);
+        --shadow-soft: 0 10px 26px rgba(166, 191, 226, 0.14);
+        --blue: #7dc4f8;
+        --indigo: #94a6e8;
+        --cyan: #9fe3f8;
+        --emerald: #8fd9c8;
+        --amber: #f4c38e;
+        --rose: #f4aecb;
+        --violet: #c8b7f8;
         --surface-radius: 18px;
       }
 
       body.dark {
-        --bg: #0b1220;
-        --bg-elevated: rgba(16, 24, 40, 0.95);
-        --bg-strong: #111b2e;
-        --bg-soft: #162338;
-        --bg-accent: #e2e8f0;
-        --text: #ecf3ff;
-        --text-soft: #b8c5d9;
-        --text-faint: #90a0b8;
-        --line: rgba(148, 163, 184, 0.16);
-        --line-strong: rgba(148, 163, 184, 0.26);
-        --shadow: 0 18px 36px rgba(2, 6, 23, 0.36);
-        --shadow-soft: 0 10px 24px rgba(2, 6, 23, 0.28);
+        --bg: #1b2131;
+        --bg-elevated: rgba(31, 40, 61, 0.95);
+        --bg-strong: #25304a;
+        --bg-soft: #2d3b59;
+        --bg-accent: #dbe6ff;
+        --text: #f4f7ff;
+        --text-soft: #c7d2eb;
+        --text-faint: #9fb0cf;
+        --line: rgba(168, 186, 225, 0.18);
+        --line-strong: rgba(168, 186, 225, 0.3);
+        --shadow: 0 18px 36px rgba(8, 12, 22, 0.34);
+        --shadow-soft: 0 10px 24px rgba(8, 12, 22, 0.26);
       }
 
       * {
@@ -102,110 +102,278 @@
       }
 
       .hero {
-        border-radius: 22px;
-        background: var(--bg-strong);
+        border-radius: 24px;
+        background:
+          linear-gradient(135deg, rgba(244, 174, 203, 0.16), rgba(157, 223, 248, 0.18)),
+          var(--bg-strong);
         color: var(--text);
-        padding: 28px;
+        padding: 18px;
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
       }
 
       .hero-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
-        gap: 24px;
-        align-items: start;
+        grid-template-columns: minmax(0, 1.2fr) minmax(520px, 0.8fr);
+        gap: 14px;
+        align-items: center;
       }
 
       .top-strip {
-        margin-bottom: 24px;
+        margin-bottom: 0;
+        padding: 18px;
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.6);
       }
 
       .header-stack {
         display: grid;
-        gap: 14px;
+        gap: 12px;
+      }
+
+      .hero-topline,
+      .hero-mainline {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 12px 16px;
       }
 
       .hero-kicker {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 8px 12px;
+        padding: 7px 11px;
         border-radius: 999px;
-        background: var(--bg-soft);
+        background: rgba(255, 255, 255, 0.78);
         border: 1px solid var(--line);
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 700;
         color: var(--text-soft);
-        letter-spacing: 0.08em;
+        letter-spacing: 0.06em;
         text-transform: uppercase;
       }
 
       .hero-title {
         margin: 0;
-        font-size: clamp(28px, 4vw, 42px);
-        line-height: 1.08;
+        font-size: clamp(28px, 3.2vw, 36px);
+        line-height: 1.04;
         letter-spacing: 0;
       }
 
+      .hero-intro {
+        display: grid;
+        gap: 8px;
+      }
+
+      .hero-summary-block {
+        display: grid;
+        gap: 10px;
+        justify-items: end;
+        min-width: 0;
+      }
+
       .hero-copy {
-        max-width: 640px;
+        max-width: 520px;
         margin: 0;
         font-size: 15px;
-        line-height: 1.7;
+        line-height: 1.6;
         color: var(--text-soft);
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
-        gap: 12px;
-        margin-top: 4px;
+        gap: 10px;
+        width: 100%;
+        justify-content: flex-end;
       }
 
       .hero-summary {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 12px;
+        grid-template-columns: repeat(3, minmax(92px, 1fr));
+        gap: 10px;
+        min-width: min(100%, 320px);
+      }
+
+      .summary-filter-group {
+        display: inline-flex;
+        gap: 6px;
+        padding: 4px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.78);
+        border: 1px solid var(--line);
+      }
+
+      .summary-filter-button {
+        padding: 7px 12px;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text-soft);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+
+      .summary-filter-button.active {
+        background: linear-gradient(135deg, rgba(244, 174, 203, 0.22), rgba(157, 223, 248, 0.22));
+        color: var(--text);
       }
 
       .summary-chip {
-        padding: 14px 16px;
-        border-radius: 16px;
-        background: var(--bg-soft);
-        border: 1px solid var(--line);
+        min-width: 0;
+        padding: 14px 14px;
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
       }
 
       .summary-chip strong {
         display: block;
-        font-size: 28px;
+        font-size: 20px;
         line-height: 1;
-        margin-bottom: 6px;
+        margin-bottom: 4px;
       }
 
       .summary-chip span {
-        font-size: 13px;
+        font-size: 12px;
         color: var(--text-soft);
+      }
+
+      .summary-chip:nth-child(1) {
+        background: linear-gradient(135deg, rgba(244, 174, 203, 0.22), rgba(255, 255, 255, 0.9));
+      }
+
+      .summary-chip:nth-child(2) {
+        background: linear-gradient(135deg, rgba(157, 223, 248, 0.24), rgba(255, 255, 255, 0.9));
+      }
+
+      .summary-chip:nth-child(3) {
+        background: linear-gradient(135deg, rgba(200, 183, 248, 0.24), rgba(255, 255, 255, 0.9));
       }
 
       .hero-side {
         display: grid;
-        gap: 14px;
+        gap: 0;
       }
 
       .hero-panel {
-        display: grid;
-        gap: 14px;
-        padding: 18px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        justify-content: flex-end;
+        gap: 10px;
+        padding: 14px 16px;
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        background: rgba(255, 255, 255, 0.76);
+      }
+
+      .hero-side .status-card,
+      .hero-side .clock-card {
+        padding: 12px 14px;
         border-radius: 18px;
-        border: 1px solid var(--line);
-        background: var(--bg-soft);
+      }
+
+      .hero-side .panel-copy,
+      .hero-side .clock-meta {
+        font-size: 12px;
+      }
+
+      .hero-side .sync-chip {
+        padding: 8px 10px;
+      }
+
+      .hero-side .clock-card {
+        gap: 4px;
+      }
+
+      .hero-side .clock-time {
+        font-size: 18px;
+      }
+
+      .hero-side .metric-eyebrow {
+        font-size: 11px;
+        letter-spacing: 0.1em;
+      }
+
+      .hero-side .theme-toggle {
+        padding: 4px;
+      }
+
+      .hero-side .theme-option {
+        padding: 8px 10px;
+      }
+
+      .hero-side .control-cluster {
+        justify-content: space-between;
+      }
+
+      .hero-side .control-cluster,
+      .hero-side .hero-support-grid,
+      .hero-side .status-mix-top,
+      .hero-side .hero-actions {
+        flex: 1 1 auto;
+      }
+
+      .compact-status {
+        max-width: none;
+      }
+
+      .compact-status .panel-copy {
+        margin-top: 8px;
+      }
+
+      .section-anchor {
+        scroll-margin-top: 20px;
+      }
+
+      .visually-hidden {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
       }
 
       .section-nav {
         display: inline-flex;
         gap: 8px;
         flex-wrap: wrap;
+        align-items: center;
+      }
+
+      .hero-support-grid {
+        display: grid;
+        grid-template-columns: minmax(160px, auto) minmax(220px, 1fr);
+        gap: 10px;
+        align-items: center;
+      }
+
+      .hero-kicker-group {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .top-add-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 42px;
+        height: 42px;
+        border-radius: 999px;
+        background: linear-gradient(135deg, var(--rose), var(--blue));
+        color: white;
+        box-shadow: 0 10px 22px rgba(163, 191, 232, 0.28);
       }
 
       .clock-card {
@@ -234,6 +402,7 @@
       .small-button,
       .icon-button {
         border-radius: 18px;
+        position: relative;
         transition: transform 160ms ease, background 160ms ease, border-color 160ms ease, color 160ms ease;
       }
 
@@ -246,27 +415,30 @@
       }
 
       .pill-button {
-        padding: 14px 18px;
-        background: var(--bg-accent);
+        padding: 12px 16px;
+        background: linear-gradient(135deg, var(--rose), var(--blue));
         color: white;
         font-weight: 700;
-        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
+        box-shadow: 0 12px 24px rgba(163, 191, 232, 0.28);
+        white-space: nowrap;
       }
 
       .ghost-button {
-        padding: 14px 18px;
-        background: var(--bg-strong);
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.82);
         border: 1px solid var(--line);
         color: var(--text);
         font-weight: 600;
+        white-space: nowrap;
       }
 
       .solid-button {
-        padding: 14px 18px;
-        background: var(--blue);
+        padding: 12px 16px;
+        background: linear-gradient(135deg, var(--blue), var(--cyan));
         color: white;
         font-weight: 700;
-        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.18);
+        box-shadow: 0 12px 24px rgba(125, 196, 248, 0.3);
+        white-space: nowrap;
       }
 
       .small-button {
@@ -333,6 +505,31 @@
         color: var(--text);
       }
 
+      .tab:focus-visible,
+      .mini-tab:focus-visible,
+      .theme-option:focus-visible,
+      .pill-button:focus-visible,
+      .ghost-button:focus-visible,
+      .solid-button:focus-visible,
+      .small-button:focus-visible,
+      .icon-button:focus-visible {
+        outline: 3px solid rgba(59, 130, 246, 0.2);
+        outline-offset: 2px;
+      }
+
+      .tab:disabled,
+      .mini-tab:disabled,
+      .theme-option:disabled,
+      .pill-button:disabled,
+      .ghost-button:disabled,
+      .solid-button:disabled,
+      .small-button:disabled,
+      .icon-button:disabled {
+        cursor: not-allowed;
+        opacity: 0.62;
+        transform: none;
+      }
+
       .status-panel {
         display: grid;
         gap: 14px;
@@ -348,7 +545,7 @@
       .status-card {
         border-radius: 16px;
         padding: 16px;
-        background: var(--bg-strong);
+        background: rgba(255, 255, 255, 0.82);
         border: 1px solid var(--line);
       }
 
@@ -511,9 +708,33 @@
       }
 
       .tab.active {
-        background: var(--bg-strong);
+        background: linear-gradient(135deg, rgba(244, 174, 203, 0.26), rgba(157, 223, 248, 0.26));
         color: var(--text);
-        box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+        box-shadow: 0 8px 20px rgba(177, 196, 231, 0.18);
+      }
+
+      .chart-filter-group {
+        display: inline-flex;
+        gap: 6px;
+        padding: 4px;
+        border-radius: 999px;
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
+      }
+
+      .chart-filter-button {
+        padding: 8px 12px;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text-soft);
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: capitalize;
+      }
+
+      .chart-filter-button.active {
+        background: linear-gradient(135deg, rgba(244, 174, 203, 0.22), rgba(157, 223, 248, 0.22));
+        color: var(--text);
       }
 
       .report-actions {
@@ -521,6 +742,14 @@
         gap: 12px;
         flex-wrap: wrap;
         align-items: center;
+      }
+
+      .report-filter-row {
+        display: grid;
+        grid-template-columns: 220px 220px auto;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 18px;
       }
 
       .print-button {
@@ -579,7 +808,7 @@
       }
 
       .mini-tab.active {
-        background: var(--bg-accent);
+        background: linear-gradient(135deg, var(--rose), var(--blue));
         color: white;
       }
 
@@ -654,6 +883,68 @@
         font-size: 34px;
       }
 
+      .status-mix-top {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        border-radius: 14px;
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+      }
+
+      .status-mix-top .metric-eyebrow {
+        margin-bottom: 6px;
+      }
+
+      .status-mix-top .panel-copy {
+        margin-top: 4px;
+        font-size: 12px;
+        line-height: 1.4;
+      }
+
+      .status-mix-top .doughnut-wrap {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+
+      .status-mix-top .doughnut {
+        width: 74px;
+        height: 74px;
+        flex: 0 0 74px;
+      }
+
+      .status-mix-top .doughnut::after {
+        inset: 12px;
+        background: var(--bg-soft);
+      }
+
+      .status-mix-top .doughnut-center strong {
+        font-size: 16px;
+      }
+
+      .status-mix-top .doughnut-center .meta-text {
+        font-size: 10px;
+      }
+
+      .status-mix-top .stack-list {
+        gap: 6px;
+      }
+
+      .status-mix-top .stack-item {
+        padding: 0;
+        border: 0;
+        background: transparent;
+        gap: 8px;
+        justify-content: flex-start;
+      }
+
+      .status-mix-top .stack-item strong,
+      .status-mix-top .stack-item .meta-text {
+        font-size: 12px;
+      }
+
       .stack-list,
       .insight-list {
         display: grid;
@@ -709,8 +1000,8 @@
       .field:focus,
       .select-field:focus,
       .textarea-field:focus {
-        border-color: rgba(59, 130, 246, 0.55);
-        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.14);
+        border-color: rgba(125, 196, 248, 0.72);
+        box-shadow: 0 0 0 4px rgba(244, 174, 203, 0.16);
       }
 
       .section-title {
@@ -882,14 +1173,39 @@
         }
       }
 
-      @media (max-width: 1180px) {
-        .hero-grid,
+      @media (max-width: 980px) {
         .doughnut-wrap,
         .toolbar,
         .metric-grid,
-        .modal-body,
-        .hero-summary {
+        .modal-body {
           grid-template-columns: 1fr;
+        }
+
+        .hero-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-topline,
+        .hero-mainline {
+          align-items: flex-start;
+        }
+
+        .hero-side,
+        .hero-panel {
+          justify-content: flex-start;
+        }
+
+        .hero-panel,
+        .hero-support-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .report-filter-row {
+          grid-template-columns: 1fr;
+        }
+
+        .hero-summary {
+          min-width: 0;
         }
 
         .span-8,
@@ -917,7 +1233,7 @@
         }
 
         .hero {
-          padding: 20px;
+          padding: 14px;
           border-radius: 18px;
         }
 
@@ -931,6 +1247,36 @@
         .control-cluster,
         .split-header {
           justify-content: flex-start;
+        }
+
+        .hero-title {
+          font-size: 22px;
+        }
+
+        .hero-summary {
+          width: 100%;
+        }
+
+        .summary-chip {
+          width: 100%;
+        }
+
+        .hero-side,
+        .hero-panel {
+          width: 100%;
+        }
+
+        .compact-status {
+          max-width: none;
+          width: 100%;
+        }
+
+        .hero-mainline {
+          gap: 14px;
+        }
+
+        .hero-actions {
+          justify-content: stretch;
         }
       }
 
@@ -992,17 +1338,20 @@
       };
 
       const STATUS_META = {
-        Admitted: { label: "Admitted", tone: "#3b82f6", bg: "rgba(59,130,246,0.14)" },
-        Discharged: { label: "Discharged", tone: "#10b981", bg: "rgba(16,185,129,0.14)" },
-        Died: { label: "Death", tone: "#f43f5e", bg: "rgba(244,63,94,0.14)" },
-        LAMA: { label: "LAMA", tone: "#f59e0b", bg: "rgba(245,158,11,0.14)" },
-        Transferred: { label: "Transferred", tone: "#8b5cf6", bg: "rgba(139,92,246,0.14)" }
+        Admitted: { label: "Admitted", tone: "#6eaee6", bg: "rgba(125,196,248,0.18)" },
+        Discharged: { label: "Discharged", tone: "#76c7b7", bg: "rgba(143,217,200,0.18)" },
+        Died: { label: "Death", tone: "#e98bb0", bg: "rgba(244,174,203,0.2)" },
+        LAMA: { label: "LAMA", tone: "#e6b07f", bg: "rgba(244,195,142,0.2)" },
+        Transferred: { label: "Transferred", tone: "#a790ea", bg: "rgba(200,183,248,0.2)" }
       };
 
       const STATUS_ORDER = ["Admitted", "Discharged", "Died", "LAMA", "Transferred"];
       const DIAGNOSIS_OPTIONS = ["Pre Term", "Severe Birth Asphyxia", "SEPSIS", "RDS", "Others"];
+      const SEX_OPTIONS = ["Male", "Female", "Ambiguous"];
       const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
       const VIEW_MODES = ["overview", "tracker", "reports"];
+      const CHART_RANGES = ["day", "month", "year"];
+      const SUMMARY_RANGES = ["day", "month", "year"];
 
       function useTheme() {
         const [theme, setTheme] = useState(() => localStorage.getItem("nicu-theme") || "light");
@@ -1094,6 +1443,36 @@
         return months;
       }
 
+      function getRecentDays() {
+        const now = new Date();
+        const days = [];
+        for (let i = 6; i >= 0; i -= 1) {
+          const cursor = new Date(now.getFullYear(), now.getMonth(), now.getDate() - i);
+          days.push({
+            key: cursor.toISOString().slice(0, 10),
+            label: cursor.toLocaleDateString(undefined, { day: "2-digit", month: "short" }),
+            day: cursor.getDate(),
+            month: cursor.getMonth(),
+            year: cursor.getFullYear()
+          });
+        }
+        return days;
+      }
+
+      function getRecentYears() {
+        const now = new Date();
+        const years = [];
+        for (let i = 4; i >= 0; i -= 1) {
+          const year = now.getFullYear() - i;
+          years.push({
+            key: String(year),
+            label: String(year),
+            year
+          });
+        }
+        return years;
+      }
+
       function statusBadge(status) {
         const meta = STATUS_META[status] || STATUS_META.Admitted;
         return {
@@ -1113,11 +1492,11 @@
       function ThemeToggle({ theme, setTheme }) {
         return (
           <div className="theme-toggle">
-            <button className={`theme-option ${theme === "light" ? "active" : ""}`} onClick={() => setTheme("light")}>
+            <button type="button" className={`theme-option ${theme === "light" ? "active" : ""}`} onClick={() => setTheme("light")}>
               <Icon size={16}><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></Icon>
               Light
             </button>
-            <button className={`theme-option ${theme === "dark" ? "active" : ""}`} onClick={() => setTheme("dark")}>
+            <button type="button" className={`theme-option ${theme === "dark" ? "active" : ""}`} onClick={() => setTheme("dark")}>
               <Icon size={16}><path d="M21 12.8A9 9 0 1 1 11.2 3 7 7 0 0 0 21 12.8z"></path></Icon>
               Dark
             </button>
@@ -1125,12 +1504,12 @@
         );
       }
 
-      function SyncIndicator({ isSyncing, user, connectionError, lastUpdated }) {
+      function SyncIndicator({ isSyncing, user, connectionError, lastUpdated, compact = false }) {
         const isLive = user && !connectionError && !isSyncing;
         const label = isSyncing ? "Connecting to Firebase" : isLive ? "Live Firebase sync active" : "Sync attention needed";
         const detail = connectionError ? connectionError : lastUpdated ? `Last update ${lastUpdated}` : "Waiting for first snapshot";
         return (
-          <div className="status-card">
+          <div className={`status-card ${compact ? "compact-status" : ""}`}>
             <div className="sync-chip">
               <span className={`sync-dot ${isLive ? "" : "offline"}`}></span>
               <strong>{label}</strong>
@@ -1189,13 +1568,13 @@
                   </g>
                 );
               })}
-              <path d={areaToString(admissionsPoints)} fill="rgba(59, 130, 246, 0.15)"></path>
-              <polyline fill="none" stroke="#3b82f6" strokeWidth="4" points={lineToString(admissionsPoints)}></polyline>
-              <polyline fill="none" stroke="#10b981" strokeWidth="4" points={lineToString(outcomesPoints)}></polyline>
+              <path d={areaToString(admissionsPoints)} fill="rgba(125, 196, 248, 0.2)"></path>
+              <polyline fill="none" stroke="#7dc4f8" strokeWidth="4" points={lineToString(admissionsPoints)}></polyline>
+              <polyline fill="none" stroke="#f4aecb" strokeWidth="4" points={lineToString(outcomesPoints)}></polyline>
               {admissionsPoints.map((point, index) => (
                 <g key={index}>
-                  <circle cx={point[0]} cy={point[1]} r="4.8" fill="#3b82f6"></circle>
-                  <circle cx={outcomesPoints[index][0]} cy={outcomesPoints[index][1]} r="4.8" fill="#10b981"></circle>
+                  <circle cx={point[0]} cy={point[1]} r="4.8" fill="#7dc4f8"></circle>
+                  <circle cx={outcomesPoints[index][0]} cy={outcomesPoints[index][1]} r="4.8" fill="#f4aecb"></circle>
                 </g>
               ))}
             </svg>
@@ -1233,7 +1612,7 @@
         );
       }
 
-      function StatusDoughnut({ items, total }) {
+      function StatusDoughnut({ items, total, compact = false }) {
         let cursor = 0;
         const segments = items.map(item => {
           const percent = total ? (item.value / total) * 100 : 0;
@@ -1243,16 +1622,23 @@
         });
 
         return (
-          <div className="doughnut-wrap">
+          <div className={`doughnut-wrap ${compact ? "status-mix-top" : ""}`}>
             <div className="doughnut" style={{ background: `conic-gradient(${segments.join(", ")})` }}>
               <div className="doughnut-center">
                 <div>
                   <strong>{total}</strong>
-                  <div className="meta-text">active records</div>
+                  <div className="meta-text">{compact ? "records" : "active records"}</div>
                 </div>
               </div>
             </div>
-            <div className="stack-list">
+            <div>
+              {compact && (
+                <>
+                  <div className="metric-eyebrow">Current status mix</div>
+                  <p className="panel-copy">Outcome distribution across all patient records.</p>
+                </>
+              )}
+              <div className="stack-list">
               {items.map(item => (
                 <div className="stack-item" key={item.label}>
                   <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
@@ -1262,6 +1648,7 @@
                   <span className="meta-text">{item.value}</span>
                 </div>
               ))}
+              </div>
             </div>
           </div>
         );
@@ -1314,6 +1701,10 @@
       function App() {
         const [theme, setTheme] = useTheme();
         const [viewMode, setViewMode] = useState("overview");
+        const [chartRange, setChartRange] = useState("month");
+        const [summaryRange, setSummaryRange] = useState("month");
+        const [reportMonthFilter, setReportMonthFilter] = useState("All");
+        const [reportYearFilter, setReportYearFilter] = useState("All");
         const [now, setNow] = useState(new Date());
         const [patients, setPatients] = useState([]);
         const [searchQuery, setSearchQuery] = useState("");
@@ -1327,6 +1718,7 @@
         const [formData, setFormData] = useState({
           name: "",
           uhid: "",
+          sex: SEX_OPTIONS[0],
           dob: "",
           admissionDate: "",
           unit: "NICU",
@@ -1338,6 +1730,26 @@
         });
 
         const firebaseRef = React.useRef(null);
+        const workspaceRef = React.useRef(null);
+
+        const scrollToWorkspace = () => {
+          window.setTimeout(() => {
+            workspaceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+          }, 80);
+        };
+
+        const openWorkspaceView = mode => {
+          setViewMode(mode);
+          scrollToWorkspace();
+        };
+
+        const printReportView = () => {
+          setViewMode("reports");
+          window.setTimeout(() => {
+            workspaceRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+            window.setTimeout(() => window.print(), 220);
+          }, 80);
+        };
 
         useEffect(() => {
           const timer = window.setInterval(() => setNow(new Date()), 1000);
@@ -1395,7 +1807,7 @@
             .filter(patient => {
               if (filterStatus !== "All" && patient.status !== filterStatus) return false;
               if (!query) return true;
-              return [patient.name, patient.uhid, patient.unit, patient.diagnosis, patient.notes]
+              return [patient.name, patient.uhid, patient.sex, patient.unit, patient.diagnosis, patient.notes]
                 .filter(Boolean)
                 .some(value => String(value).toLowerCase().includes(query));
             })
@@ -1410,9 +1822,19 @@
           const now = new Date();
           const currentMonth = now.getMonth();
           const currentYear = now.getFullYear();
+          const recentDays = getRecentDays();
           const recentMonths = getRecentMonths();
+          const recentYears = getRecentYears();
 
           const activeCount = patients.filter(patient => patient.status === "Admitted").length;
+          const dailyAdmissions = patients.filter(patient => {
+            const date = toDate(patient.admissionDate);
+            return date && date.getDate() === now.getDate() && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+          }).length;
+          const dailyOutcomes = patients.filter(patient => {
+            const date = toDate(patient.outcomeDate);
+            return date && date.getDate() === now.getDate() && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+          }).length;
           const monthlyAdmissions = patients.filter(patient => {
             const date = toDate(patient.admissionDate);
             return date && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
@@ -1420,6 +1842,14 @@
           const monthlyOutcomes = patients.filter(patient => {
             const date = toDate(patient.outcomeDate);
             return date && date.getMonth() === currentMonth && date.getFullYear() === currentYear;
+          }).length;
+          const yearlyAdmissions = patients.filter(patient => {
+            const date = toDate(patient.admissionDate);
+            return date && date.getFullYear() === currentYear;
+          }).length;
+          const yearlyOutcomes = patients.filter(patient => {
+            const date = toDate(patient.outcomeDate);
+            return date && date.getFullYear() === currentYear;
           }).length;
           const outcomeRecords = patients.filter(patient => patient.status !== "Admitted");
           const mortalityRate = outcomeRecords.length
@@ -1441,10 +1871,34 @@
             return { ...item, admissions, outcomes };
           });
 
+          const dayTrend = recentDays.map(item => {
+            const admissions = patients.filter(patient => {
+              const date = toDate(patient.admissionDate);
+              return date && date.getDate() === item.day && date.getMonth() === item.month && date.getFullYear() === item.year;
+            }).length;
+            const outcomes = patients.filter(patient => {
+              const date = toDate(patient.outcomeDate);
+              return date && date.getDate() === item.day && date.getMonth() === item.month && date.getFullYear() === item.year;
+            }).length;
+            return { ...item, admissions, outcomes };
+          });
+
+          const yearTrend = recentYears.map(item => {
+            const admissions = patients.filter(patient => {
+              const date = toDate(patient.admissionDate);
+              return date && date.getFullYear() === item.year;
+            }).length;
+            const outcomes = patients.filter(patient => {
+              const date = toDate(patient.outcomeDate);
+              return date && date.getFullYear() === item.year;
+            }).length;
+            return { ...item, admissions, outcomes };
+          });
+
           const diagnosisSummary = DIAGNOSIS_OPTIONS.map((diagnosis, index) => ({
             label: diagnosis,
             value: patients.filter(patient => (patient.diagnosis || "Others") === diagnosis).length,
-            color: ["#3b82f6", "#8b5cf6", "#06b6d4", "#10b981", "#f59e0b"][index]
+            color: ["#7dc4f8", "#c8b7f8", "#9fe3f8", "#8fd9c8", "#f4c38e"][index]
           })).sort((a, b) => b.value - a.value);
 
           const statusSummary = STATUS_ORDER.map(status => ({
@@ -1456,7 +1910,7 @@
           const unitSummary = ["NICU", "SNCU"].map((unit, index) => ({
             label: unit,
             value: patients.filter(patient => (patient.unit || "NICU") === unit).length,
-            color: index === 0 ? "#3b82f6" : "#14b8a6"
+            color: index === 0 ? "#7dc4f8" : "#8fd9c8"
           }));
 
           const longestStay = outcomeRecords
@@ -1507,6 +1961,9 @@
             };
             return {
               month: `${item.label} ${String(item.year).slice(-2)}`,
+              monthLabel: item.label,
+              monthIndex: item.month,
+              year: item.year,
               admissions: admitted.length,
               nicu: nicuAdmissions.length,
               sncu: sncuAdmissions.length,
@@ -1543,11 +2000,17 @@
           return {
             total: patients.length,
             activeCount,
+            dailyAdmissions,
+            dailyOutcomes,
             monthlyAdmissions,
             monthlyOutcomes,
+            yearlyAdmissions,
+            yearlyOutcomes,
             mortalityRate,
             averageStayHours,
+            dayTrend,
             monthTrend,
+            yearTrend,
             diagnosisSummary,
             statusSummary,
             unitSummary,
@@ -1557,11 +2020,56 @@
           };
         }, [patients]);
 
+        const chartData = chartRange === "day"
+          ? analytics.dayTrend
+          : chartRange === "year"
+            ? analytics.yearTrend
+            : analytics.monthTrend;
+
+        const chartDescription = chartRange === "day"
+          ? "Daily movement across the last 7 days."
+          : chartRange === "year"
+            ? "Year-wise admissions and outcomes across the last 5 years."
+            : "Month-wise movement across the last 6 months.";
+
+        const summaryStats = summaryRange === "day"
+          ? [
+              { value: analytics.activeCount, label: "admitted now" },
+              { value: analytics.dailyAdmissions, label: "today admissions" },
+              { value: analytics.dailyOutcomes, label: "today outcomes" }
+            ]
+          : summaryRange === "year"
+            ? [
+                { value: analytics.activeCount, label: "admitted now" },
+                { value: analytics.yearlyAdmissions, label: "this year" },
+                { value: analytics.yearlyOutcomes, label: "year outcomes" }
+              ]
+            : [
+                { value: analytics.activeCount, label: "admitted now" },
+                { value: analytics.monthlyAdmissions, label: "this month" },
+                { value: analytics.monthlyOutcomes, label: "outcomes logged" }
+              ];
+
+        const reportYears = useMemo(
+          () => [...new Set(analytics.reportRows.map(row => row.year))].sort((a, b) => b - a),
+          [analytics.reportRows]
+        );
+
+        const filteredReportRows = useMemo(
+          () => analytics.reportRows.filter(row => {
+            if (reportYearFilter !== "All" && String(row.year) !== reportYearFilter) return false;
+            if (reportMonthFilter !== "All" && row.monthLabel !== reportMonthFilter) return false;
+            return true;
+          }),
+          [analytics.reportRows, reportMonthFilter, reportYearFilter]
+        );
+
         const resetForm = () => {
           setEditingPatient(null);
           setFormData({
             name: "",
             uhid: "",
+            sex: SEX_OPTIONS[0],
             dob: "",
             admissionDate: "",
             unit: "NICU",
@@ -1583,6 +2091,7 @@
           setFormData({
             name: patient.name || "",
             uhid: patient.uhid || "",
+            sex: patient.sex || SEX_OPTIONS[0],
             dob: patient.dob || "",
             admissionDate: patient.admissionDate || "",
             unit: patient.unit || "NICU",
@@ -1636,41 +2145,59 @@
               <section className="hero fade-in">
                 <div className="hero-grid">
                   <div className="header-stack top-strip">
-                    <div className="hero-kicker">
-                      <Icon size={16}><path d="M3 12h4l2.5-5 4 10 2.5-5H21"></path></Icon>
-                      Rajendra Institute of Medical Sciences
-                    </div>
-                    <div>
-                      <h1 className="hero-title">RIMS NICU Tracker</h1>
-                      <p className="hero-copy">
-                        A simpler live workspace for admissions, patient status, and monthly NICU reporting.
-                      </p>
-                    </div>
-                    <div className="section-nav">
-                      {VIEW_MODES.map(mode => (
-                        <button key={mode} className={`mini-tab ${viewMode === mode ? "active" : ""}`} onClick={() => setViewMode(mode)}>
-                          {mode === "overview" ? "Overview" : mode === "tracker" ? "Live Tracker" : "Monthly Report"}
+                    <div className="hero-topline">
+                      <div className="hero-kicker-group">
+                        <div className="hero-kicker">
+                          <Icon size={16}><path d="M3 12h4l2.5-5 4 10 2.5-5H21"></path></Icon>
+                          Rajendra Institute of Medical Sciences
+                        </div>
+                        <button type="button" className="top-add-button" onClick={openNewModal} aria-label="Add patient">
+                          <Icon size={18}><path d="M12 5v14"></path><path d="M5 12h14"></path></Icon>
                         </button>
-                      ))}
-                    </div>
-                    <div className="hero-summary">
-                      <div className="summary-chip">
-                        <strong>{analytics.activeCount}</strong>
-                        <span>currently admitted</span>
                       </div>
-                      <div className="summary-chip">
-                        <strong>{analytics.monthlyAdmissions}</strong>
-                        <span>admissions this month</span>
-                      </div>
-                      <div className="summary-chip">
-                        <strong>{analytics.monthlyOutcomes}</strong>
-                        <span>logged outcomes this month</span>
+                      <div className="section-nav" aria-label="Jump to section">
+                        {VIEW_MODES.map(mode => (
+                          <button
+                            key={mode}
+                            type="button"
+                            className={`mini-tab ${viewMode === mode ? "active" : ""}`}
+                            onClick={() => openWorkspaceView(mode)}
+                          >
+                            {mode === "overview" ? "Overview" : mode === "tracker" ? "Live Tracker" : "Monthly Report"}
+                          </button>
+                        ))}
                       </div>
                     </div>
-                    <div className="hero-actions">
-                      <button className="pill-button" onClick={openNewModal}>Add Patient</button>
-                      <button className="ghost-button" onClick={() => setViewMode("tracker")}>Open Tracker</button>
-                      <button className="ghost-button" onClick={() => window.print()}>Print Monthly Report</button>
+
+                    <div className="hero-mainline">
+                      <div className="hero-intro">
+                        <h1 className="hero-title">RIMS NICU Tracker</h1>
+                        <p className="hero-copy">
+                          Live admissions, patient status, and monthly NICU reporting in one compact workspace.
+                        </p>
+                      </div>
+                      <div className="hero-summary-block">
+                        <div className="summary-filter-group" aria-label="Top summary time filter">
+                          {SUMMARY_RANGES.map(range => (
+                            <button
+                              key={range}
+                              type="button"
+                              className={`summary-filter-button ${summaryRange === range ? "active" : ""}`}
+                              onClick={() => setSummaryRange(range)}
+                            >
+                              {range}
+                            </button>
+                          ))}
+                        </div>
+                        <div className="hero-summary" aria-label="Quick stats">
+                          {summaryStats.map(item => (
+                            <div key={item.label} className="summary-chip">
+                              <strong>{item.value}</strong>
+                              <span>{item.label}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
                   </div>
 
@@ -1680,31 +2207,21 @@
                         <div className="metric-eyebrow">Display</div>
                         <ThemeToggle theme={theme} setTheme={setTheme} />
                       </div>
-                      <ClockCard now={now} />
-                    </div>
-                    <div className="status-panel">
-                      <SyncIndicator
-                        isSyncing={isSyncing}
-                        user={user}
-                        connectionError={connectionError}
-                        lastUpdated={lastSnapshotAt ? `${lastSnapshotAt}` : ""}
-                      />
-                      <div className="status-card">
-                        <div className="metric-eyebrow">Today at a glance</div>
-                        <h3 style={{ fontSize: 28, margin: "10px 0 6px" }}>{analytics.activeCount} babies currently active</h3>
-                        <p className="panel-copy">
-                          {analytics.monthlyAdmissions} admissions recorded this month with {analytics.monthlyOutcomes} outcomes logged.
-                        </p>
-                        <div className="status-strip" style={{ marginTop: 16 }}>
-                          <div className="sync-chip">
-                            <strong>{analytics.mortalityRate}%</strong>
-                            <span className="meta-text">mortality rate</span>
-                          </div>
-                          <div className="sync-chip">
-                            <strong>{Math.round(analytics.averageStayHours || 0)}h</strong>
-                            <span className="meta-text">avg stay</span>
-                          </div>
-                        </div>
+                      <div className="hero-support-grid">
+                        <ClockCard now={now} />
+                        <SyncIndicator
+                          isSyncing={isSyncing}
+                          user={user}
+                          connectionError={connectionError}
+                          lastUpdated={lastSnapshotAt ? `${lastSnapshotAt}` : ""}
+                          compact
+                        />
+                      </div>
+                      <StatusDoughnut items={analytics.statusSummary} total={analytics.total} compact />
+                      <div className="hero-actions">
+                        <button type="button" className="pill-button" onClick={openNewModal}>Add Patient</button>
+                        <button type="button" className="ghost-button" onClick={() => openWorkspaceView("tracker")}>Open Tracker</button>
+                        <button type="button" className="ghost-button" onClick={printReportView}>Print Report</button>
                       </div>
                     </div>
                   </div>
@@ -1715,7 +2232,7 @@
                 <div className="notice fade-in">{connectionError}</div>
               )}
 
-              <section className="analytics-grid">
+              <section ref={workspaceRef} className="analytics-grid section-anchor">
                 <div className="span-12 surface">
                   <div className="surface-inner">
                     <div className="split-header">
@@ -1725,7 +2242,7 @@
                       </div>
                       <div className="tab-group">
                         {VIEW_MODES.map(mode => (
-                          <button key={mode} className={`tab ${viewMode === mode ? "active" : ""}`} onClick={() => setViewMode(mode)}>
+                          <button key={mode} type="button" className={`tab ${viewMode === mode ? "active" : ""}`} onClick={() => setViewMode(mode)}>
                             {mode === "overview" ? "Overview" : mode === "tracker" ? "Tracker" : "Reports"}
                           </button>
                         ))}
@@ -1745,22 +2262,26 @@
                     <div className="split-header">
                       <div>
                         <h3 className="panel-title">Admissions vs outcomes</h3>
-                        <p className="panel-copy">Six-month movement to spot backlog, discharge pressure, and reporting gaps.</p>
+                        <p className="panel-copy">{chartDescription}</p>
+                      </div>
+                      <div className="chart-filter-group" aria-label="Chart time filter">
+                        {CHART_RANGES.map(range => (
+                          <button
+                            key={range}
+                            type="button"
+                            className={`chart-filter-button ${chartRange === range ? "active" : ""}`}
+                            onClick={() => setChartRange(range)}
+                          >
+                            {range}
+                          </button>
+                        ))}
                       </div>
                     </div>
                     <div className="chart-meta">
-                      <span className="legend"><span className="legend-swatch" style={{ background: "#3b82f6" }}></span>Admissions</span>
-                      <span className="legend"><span className="legend-swatch" style={{ background: "#10b981" }}></span>Outcomes</span>
+                      <span className="legend"><span className="legend-swatch" style={{ background: "#7dc4f8" }}></span>Admissions</span>
+                      <span className="legend"><span className="legend-swatch" style={{ background: "#f4aecb" }}></span>Outcomes</span>
                     </div>
-                    <LineAreaChart data={analytics.monthTrend} />
-                  </div>
-                </div>
-
-                <div className="span-5 surface">
-                  <div className="surface-inner">
-                    <h3 className="panel-title">Current status mix</h3>
-                    <p className="panel-copy">Outcome distribution across all patient records.</p>
-                    <StatusDoughnut items={analytics.statusSummary} total={analytics.total} />
+                    <LineAreaChart data={chartData} />
                   </div>
                 </div>
 
@@ -1832,9 +2353,9 @@
                       </div>
                       <div className="report-actions">
                         {viewMode === "reports" ? (
-                          <button className="print-button" onClick={() => window.print()}>Print This Report</button>
+                          <button type="button" className="print-button" onClick={() => window.print()}>Print This Report</button>
                         ) : (
-                          <button className="solid-button" onClick={openNewModal}>Add patient</button>
+                          <button type="button" className="solid-button" onClick={openNewModal}>Add patient</button>
                         )}
                       </div>
                     </div>
@@ -1844,7 +2365,7 @@
                         <input
                           className="field"
                           type="search"
-                          placeholder="Search by patient name, UHID, unit, diagnosis, or note"
+                          placeholder="Search by patient name, UHID, sex, unit, diagnosis, or note"
                           value={searchQuery}
                           onChange={event => setSearchQuery(event.target.value)}
                         />
@@ -1854,13 +2375,31 @@
                             <option key={status} value={status}>{STATUS_META[status].label}</option>
                           ))}
                         </select>
-                        <button className="small-button" onClick={() => setViewMode(viewMode === "overview" ? "tracker" : "overview")}>
+                        <button type="button" className="small-button" onClick={() => setViewMode(viewMode === "overview" ? "tracker" : "overview") }>
                           {viewMode === "overview" ? "Focus Tracker" : "Back to Overview"}
                         </button>
                       </div>
                     )}
 
                     {viewMode === "reports" ? (
+                      <>
+                        <div className="report-filter-row">
+                          <select className="select-field" value={reportMonthFilter} onChange={event => setReportMonthFilter(event.target.value)}>
+                            <option value="All">All months</option>
+                            {MONTHS.map(month => (
+                              <option key={month} value={month}>{month}</option>
+                            ))}
+                          </select>
+                          <select className="select-field" value={reportYearFilter} onChange={event => setReportYearFilter(event.target.value)}>
+                            <option value="All">All years</option>
+                            {reportYears.map(year => (
+                              <option key={year} value={String(year)}>{year}</option>
+                            ))}
+                          </select>
+                          <button type="button" className="small-button" onClick={() => { setReportMonthFilter("All"); setReportYearFilter("All"); }}>
+                            Clear report filters
+                          </button>
+                        </div>
                       <div className="patient-table-wrap">
                         <table className="report-table">
                           <thead>
@@ -1908,38 +2447,45 @@
                             </tr>
                           </thead>
                           <tbody>
-                            {analytics.reportRows.map(row => (
-                              <tr key={row.month}>
-                                <td className="patient-name">{row.month}</td>
-                                <td>{row.detail.nicuDirect}</td>
-                                <td>{row.detail.sncuTransferIn}</td>
-                                <td>{row.detail.totalAdmissions}</td>
-                                <td>{row.detail.nicuDeathTA}</td>
-                                <td>{row.detail.nicuDeathCount}</td>
-                                <td>{row.detail.sncuDeathTA}</td>
-                                <td>{row.detail.sncuDeathCount}</td>
-                                <td>{row.detail.nicuDischargeTA}</td>
-                                <td>{row.detail.nicuDischargeCount}</td>
-                                <td>{row.detail.sncuDischargeTA}</td>
-                                <td>{row.detail.sncuDischargeCount}</td>
-                                <td>{row.detail.lamaTA}</td>
-                                <td>{row.detail.lamaCount}</td>
-                                <td>{row.detail.transferTA}</td>
-                                <td>{row.detail.transferCount}</td>
-                                <td>{row.detail.deathsByDiagnosis["Pre Term"]}</td>
-                                <td>{row.detail.deathsByDiagnosis["Severe Birth Asphyxia"]}</td>
-                                <td>{row.detail.deathsByDiagnosis["SEPSIS"]}</td>
-                                <td>{row.detail.deathsByDiagnosis["RDS"]}</td>
-                                <td>{row.detail.deathsByDiagnosis["Others"]}</td>
-                                <td>{row.detail.deathTimings.lt24}</td>
-                                <td>{row.detail.deathTimings.d1to7}</td>
-                                <td>{row.detail.deathTimings.d8to28}</td>
-                                <td>{row.detail.deathTimings.gt28}</td>
+                            {filteredReportRows.length === 0 ? (
+                              <tr>
+                                <td colSpan="25" className="empty-state">No monthly report rows match the selected filters.</td>
                               </tr>
-                            ))}
+                            ) : (
+                              filteredReportRows.map(row => (
+                                <tr key={row.month}>
+                                  <td className="patient-name">{row.month}</td>
+                                  <td>{row.detail.nicuDirect}</td>
+                                  <td>{row.detail.sncuTransferIn}</td>
+                                  <td>{row.detail.totalAdmissions}</td>
+                                  <td>{row.detail.nicuDeathTA}</td>
+                                  <td>{row.detail.nicuDeathCount}</td>
+                                  <td>{row.detail.sncuDeathTA}</td>
+                                  <td>{row.detail.sncuDeathCount}</td>
+                                  <td>{row.detail.nicuDischargeTA}</td>
+                                  <td>{row.detail.nicuDischargeCount}</td>
+                                  <td>{row.detail.sncuDischargeTA}</td>
+                                  <td>{row.detail.sncuDischargeCount}</td>
+                                  <td>{row.detail.lamaTA}</td>
+                                  <td>{row.detail.lamaCount}</td>
+                                  <td>{row.detail.transferTA}</td>
+                                  <td>{row.detail.transferCount}</td>
+                                  <td>{row.detail.deathsByDiagnosis["Pre Term"]}</td>
+                                  <td>{row.detail.deathsByDiagnosis["Severe Birth Asphyxia"]}</td>
+                                  <td>{row.detail.deathsByDiagnosis["SEPSIS"]}</td>
+                                  <td>{row.detail.deathsByDiagnosis["RDS"]}</td>
+                                  <td>{row.detail.deathsByDiagnosis["Others"]}</td>
+                                  <td>{row.detail.deathTimings.lt24}</td>
+                                  <td>{row.detail.deathTimings.d1to7}</td>
+                                  <td>{row.detail.deathTimings.d8to28}</td>
+                                  <td>{row.detail.deathTimings.gt28}</td>
+                                </tr>
+                              ))
+                            )}
                           </tbody>
                         </table>
                       </div>
+                      </>
                     ) : (
                       <div className="patient-table-wrap">
                         <table>
@@ -1947,6 +2493,7 @@
                             <tr>
                               <th>Patient</th>
                               <th>UHID</th>
+                              <th>Sex</th>
                               <th>Unit</th>
                               <th>Diagnosis</th>
                               <th>Age</th>
@@ -1959,11 +2506,11 @@
                           <tbody>
                             {isSyncing ? (
                               <tr>
-                                <td colSpan="9" className="empty-state">Connecting to live tracker...</td>
+                                <td colSpan="10" className="empty-state">Connecting to live tracker...</td>
                               </tr>
                             ) : filteredPatients.length === 0 ? (
                               <tr>
-                                <td colSpan="9" className="empty-state">No patient records match the current filters.</td>
+                                <td colSpan="10" className="empty-state">No patient records match the current filters.</td>
                               </tr>
                             ) : (
                               filteredPatients.map(patient => {
@@ -1978,6 +2525,7 @@
                                       <div className="meta-text">{patient.admissionType || "Direct"}</div>
                                     </td>
                                     <td>{patient.uhid || "—"}</td>
+                                    <td>{patient.sex || "—"}</td>
                                     <td>{patient.unit || "NICU"}</td>
                                     <td>{patient.diagnosis || "Others"}</td>
                                     <td>{formatAge(hours)}</td>
@@ -1986,8 +2534,8 @@
                                     <td>{patient.outcomeDate ? formatShortDate(patient.outcomeDate) : "—"}</td>
                                     <td>
                                       <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-                                        <button className="small-button" onClick={() => openEditModal(patient)}>Edit</button>
-                                        <button className="small-button danger" onClick={() => deletePatient(patient.id)}>Delete</button>
+                                        <button type="button" className="small-button" onClick={() => openEditModal(patient)}>Edit</button>
+                                        <button type="button" className="small-button danger" onClick={() => deletePatient(patient.id)}>Delete</button>
                                       </div>
                                     </td>
                                   </tr>
@@ -2010,7 +2558,7 @@
                         <h3 className="panel-title">{editingPatient ? "Edit patient record" : "Add patient record"}</h3>
                         <p className="panel-copy">Update live clinical data without leaving the dashboard.</p>
                       </div>
-                      <button className="icon-button" onClick={closeModal} aria-label="Close modal">
+                      <button type="button" className="icon-button" onClick={closeModal} aria-label="Close modal">
                         <Icon><path d="M18 6 6 18"></path><path d="m6 6 12 12"></path></Icon>
                       </button>
                     </div>
@@ -2027,6 +2575,12 @@
                         <label className="field-group">
                           <span className="field-label">Date of birth</span>
                           <input className="field" type="datetime-local" required name="dob" value={formData.dob} onChange={handleFormChange} />
+                        </label>
+                        <label className="field-group">
+                          <span className="field-label">Sex</span>
+                          <select className="select-field" required name="sex" value={formData.sex} onChange={handleFormChange}>
+                            {SEX_OPTIONS.map(option => <option key={option} value={option}>{option}</option>)}
+                          </select>
                         </label>
                         <label className="field-group">
                           <span className="field-label">Admission date</span>
@@ -2057,7 +2611,7 @@
                         <label className="field-group">
                           <span className="field-label">Status</span>
                           <select className="select-field" name="status" value={formData.status} onChange={handleFormChange}>
-                            {STATUS_ORDER.map(status => <option key={status} value={status}>{STATUS_META[status].label}</option>)}
+                            {STATUS_ORDER.map(status => <option key={status} value={status}>{STATUS_META[status].label}</option>) }
                           </select>
                         </label>
                         <label className="field-group full">
