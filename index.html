@@ -22,41 +22,41 @@
     <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <style>
       :root {
-        --bg: #f3f6fb;
-        --bg-elevated: rgba(255, 255, 255, 0.84);
+        --bg: #f5f7fb;
+        --bg-elevated: rgba(255, 255, 255, 0.94);
         --bg-strong: #ffffff;
-        --bg-soft: #eef3fb;
-        --bg-accent: linear-gradient(135deg, #0f172a 0%, #1d4ed8 52%, #38bdf8 100%);
+        --bg-soft: #edf1f7;
+        --bg-accent: #0f172a;
         --text: #0f172a;
-        --text-soft: #516074;
-        --text-faint: #7b8ca4;
-        --line: rgba(148, 163, 184, 0.24);
-        --line-strong: rgba(148, 163, 184, 0.35);
-        --shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
-        --shadow-soft: 0 12px 30px rgba(15, 23, 42, 0.08);
+        --text-soft: #526073;
+        --text-faint: #73839b;
+        --line: rgba(148, 163, 184, 0.22);
+        --line-strong: rgba(148, 163, 184, 0.32);
+        --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+        --shadow-soft: 0 10px 24px rgba(15, 23, 42, 0.05);
         --blue: #3b82f6;
-        --indigo: #4f46e5;
+        --indigo: #2563eb;
         --cyan: #06b6d4;
         --emerald: #10b981;
         --amber: #f59e0b;
         --rose: #f43f5e;
         --violet: #8b5cf6;
-        --surface-radius: 28px;
+        --surface-radius: 18px;
       }
 
       body.dark {
-        --bg: #09111f;
-        --bg-elevated: rgba(10, 18, 32, 0.78);
-        --bg-strong: #0f1b31;
-        --bg-soft: #13233d;
-        --bg-accent: linear-gradient(135deg, #08111f 0%, #193771 52%, #0f766e 100%);
-        --text: #ecf5ff;
-        --text-soft: #b8cae4;
-        --text-faint: #89a0c2;
+        --bg: #0b1220;
+        --bg-elevated: rgba(16, 24, 40, 0.95);
+        --bg-strong: #111b2e;
+        --bg-soft: #162338;
+        --bg-accent: #e2e8f0;
+        --text: #ecf3ff;
+        --text-soft: #b8c5d9;
+        --text-faint: #90a0b8;
         --line: rgba(148, 163, 184, 0.16);
         --line-strong: rgba(148, 163, 184, 0.26);
-        --shadow: 0 24px 60px rgba(2, 6, 23, 0.5);
-        --shadow-soft: 0 16px 36px rgba(2, 6, 23, 0.32);
+        --shadow: 0 18px 36px rgba(2, 6, 23, 0.36);
+        --shadow-soft: 0 10px 24px rgba(2, 6, 23, 0.28);
       }
 
       * {
@@ -67,10 +67,7 @@
       body {
         margin: 0;
         min-height: 100%;
-        background:
-          radial-gradient(circle at top right, rgba(59, 130, 246, 0.2), transparent 30%),
-          radial-gradient(circle at bottom left, rgba(16, 185, 129, 0.14), transparent 25%),
-          var(--bg);
+        background: var(--bg);
         color: var(--text);
         font-family: "Plus Jakarta Sans", sans-serif;
         transition: background 240ms ease, color 240ms ease;
@@ -105,108 +102,119 @@
       }
 
       .hero {
-        position: relative;
-        overflow: hidden;
-        border-radius: 36px;
-        background: var(--bg-accent);
-        color: white;
-        padding: 22px 24px;
+        border-radius: 22px;
+        background: var(--bg-strong);
+        color: var(--text);
+        padding: 28px;
+        border: 1px solid var(--line);
         box-shadow: var(--shadow);
       }
 
-      .hero::before,
-      .hero::after {
-        content: "";
-        position: absolute;
-        border-radius: 999px;
-        filter: blur(8px);
-        opacity: 0.3;
-      }
-
-      .hero::before {
-        width: 260px;
-        height: 260px;
-        background: rgba(255, 255, 255, 0.18);
-        top: -80px;
-        right: -40px;
-      }
-
-      .hero::after {
-        width: 220px;
-        height: 220px;
-        background: rgba(34, 211, 238, 0.24);
-        bottom: -90px;
-        left: -70px;
-      }
-
       .hero-grid {
-        position: relative;
-        z-index: 1;
         display: grid;
-        grid-template-columns: 1.15fr 1fr;
-        gap: 16px;
-        align-items: stretch;
+        grid-template-columns: minmax(0, 1.3fr) minmax(320px, 0.7fr);
+        gap: 24px;
+        align-items: start;
       }
 
       .top-strip {
-        display: grid;
-        grid-template-columns: 1fr auto;
-        gap: 14px;
-        align-items: start;
-        margin-bottom: 16px;
+        margin-bottom: 24px;
       }
 
       .header-stack {
         display: grid;
-        gap: 10px;
+        gap: 14px;
       }
 
       .hero-kicker {
         display: inline-flex;
         align-items: center;
         gap: 10px;
-        padding: 10px 14px;
+        padding: 8px 12px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        backdrop-filter: blur(18px);
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
         font-size: 12px;
         font-weight: 700;
-        letter-spacing: 0.14em;
+        color: var(--text-soft);
+        letter-spacing: 0.08em;
         text-transform: uppercase;
       }
 
       .hero-title {
         margin: 0;
-        font-size: clamp(24px, 3vw, 34px);
-        line-height: 1.04;
+        font-size: clamp(28px, 4vw, 42px);
+        line-height: 1.08;
         letter-spacing: 0;
       }
 
       .hero-copy {
-        max-width: 720px;
+        max-width: 640px;
         margin: 0;
-        font-size: 14px;
-        line-height: 1.6;
-        color: rgba(255, 255, 255, 0.84);
+        font-size: 15px;
+        line-height: 1.7;
+        color: var(--text-soft);
       }
 
       .hero-actions {
         display: flex;
         flex-wrap: wrap;
         gap: 12px;
-        margin-top: 14px;
+        margin-top: 4px;
+      }
+
+      .hero-summary {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .summary-chip {
+        padding: 14px 16px;
+        border-radius: 16px;
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
+      }
+
+      .summary-chip strong {
+        display: block;
+        font-size: 28px;
+        line-height: 1;
+        margin-bottom: 6px;
+      }
+
+      .summary-chip span {
+        font-size: 13px;
+        color: var(--text-soft);
+      }
+
+      .hero-side {
+        display: grid;
+        gap: 14px;
+      }
+
+      .hero-panel {
+        display: grid;
+        gap: 14px;
+        padding: 18px;
+        border-radius: 18px;
+        border: 1px solid var(--line);
+        background: var(--bg-soft);
+      }
+
+      .section-nav {
+        display: inline-flex;
+        gap: 8px;
+        flex-wrap: wrap;
       }
 
       .clock-card {
         display: grid;
         gap: 6px;
-        min-width: 270px;
-        padding: 14px 16px;
-        border-radius: 22px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        backdrop-filter: blur(18px);
+        padding: 16px;
+        border-radius: 16px;
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
       }
 
       .clock-time {
@@ -217,7 +225,7 @@
 
       .clock-meta {
         font-size: 13px;
-        color: rgba(255, 255, 255, 0.78);
+        color: var(--text-soft);
       }
 
       .pill-button,
@@ -239,27 +247,26 @@
 
       .pill-button {
         padding: 14px 18px;
-        background: white;
-        color: #0f172a;
+        background: var(--bg-accent);
+        color: white;
         font-weight: 700;
-        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.16);
+        box-shadow: 0 12px 24px rgba(15, 23, 42, 0.12);
       }
 
       .ghost-button {
         padding: 14px 18px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        color: white;
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
+        color: var(--text);
         font-weight: 600;
-        backdrop-filter: blur(18px);
       }
 
       .solid-button {
         padding: 14px 18px;
-        background: linear-gradient(135deg, var(--indigo), var(--blue));
+        background: var(--blue);
         color: white;
         font-weight: 700;
-        box-shadow: 0 18px 32px rgba(59, 130, 246, 0.24);
+        box-shadow: 0 12px 24px rgba(59, 130, 246, 0.18);
       }
 
       .small-button {
@@ -289,7 +296,6 @@
         background: var(--bg-elevated);
         border: 1px solid var(--line);
         color: var(--text);
-        backdrop-filter: blur(20px);
       }
 
       .control-cluster {
@@ -306,9 +312,8 @@
         gap: 10px;
         padding: 6px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.12);
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        backdrop-filter: blur(16px);
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
       }
 
       .theme-option {
@@ -318,25 +323,19 @@
         padding: 10px 14px;
         border-radius: 999px;
         background: transparent;
-        color: rgba(255, 255, 255, 0.8);
+        color: var(--text-soft);
         font-size: 13px;
         font-weight: 700;
       }
 
       .theme-option.active {
-        background: white;
-        color: #0f172a;
+        background: var(--bg-soft);
+        color: var(--text);
       }
 
       .status-panel {
         display: grid;
-        gap: 16px;
-        align-content: space-between;
-        border-radius: 28px;
-        padding: 22px;
-        background: rgba(10, 14, 26, 0.26);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        backdrop-filter: blur(18px);
+        gap: 14px;
       }
 
       .status-panel h3,
@@ -347,10 +346,10 @@
       }
 
       .status-card {
-        border-radius: 22px;
-        padding: 18px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        padding: 16px;
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
       }
 
       .sync-chip {
@@ -359,8 +358,8 @@
         gap: 10px;
         padding: 10px 14px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.1);
-        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: var(--bg-soft);
+        border: 1px solid var(--line);
       }
 
       .sync-dot {
@@ -400,7 +399,6 @@
         border: 1px solid var(--line);
         border-radius: var(--surface-radius);
         box-shadow: var(--shadow-soft);
-        backdrop-filter: blur(18px);
       }
 
       .surface-inner {
@@ -442,28 +440,15 @@
       }
 
       .metric-card {
-        position: relative;
-        overflow: hidden;
-        min-height: 144px;
+        min-height: 132px;
         padding: 20px;
-        border-radius: 24px;
+        border-radius: 18px;
         border: 1px solid var(--line);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.08));
+        background: var(--bg-strong);
       }
 
       body.dark .metric-card {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
-      }
-
-      .metric-card::after {
-        content: "";
-        position: absolute;
-        width: 140px;
-        height: 140px;
-        border-radius: 999px;
-        right: -48px;
-        bottom: -60px;
-        background: radial-gradient(circle, rgba(59, 130, 246, 0.18), transparent 65%);
+        background: var(--bg-strong);
       }
 
       .metric-eyebrow {
@@ -512,7 +497,7 @@
         gap: 8px;
         padding: 6px;
         border-radius: 999px;
-        background: var(--bg-soft);
+        background: var(--bg-strong);
         border: 1px solid var(--line);
       }
 
@@ -541,10 +526,10 @@
       .print-button {
         padding: 12px 16px;
         border-radius: 16px;
-        background: linear-gradient(135deg, var(--emerald), #14b8a6);
+        background: var(--emerald);
         color: white;
         font-weight: 700;
-        box-shadow: 0 14px 26px rgba(16, 185, 129, 0.22);
+        box-shadow: 0 12px 22px rgba(16, 185, 129, 0.18);
       }
 
       .report-table {
@@ -585,17 +570,17 @@
       .mini-tab {
         padding: 9px 12px;
         border-radius: 14px;
-        background: rgba(255, 255, 255, 0.08);
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        color: rgba(255, 255, 255, 0.88);
+        background: var(--bg-strong);
+        border: 1px solid var(--line);
+        color: var(--text-soft);
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.04em;
       }
 
       .mini-tab.active {
-        background: white;
-        color: #0f172a;
+        background: var(--bg-accent);
+        color: white;
       }
 
       .chart-frame {
@@ -682,7 +667,7 @@
         justify-content: space-between;
         gap: 14px;
         padding: 12px 14px;
-        border-radius: 18px;
+        border-radius: 16px;
         background: var(--bg-soft);
         border: 1px solid var(--line);
       }
@@ -735,7 +720,7 @@
 
       .patient-table-wrap {
         overflow: auto;
-        border-radius: 22px;
+        border-radius: 18px;
         border: 1px solid var(--line);
       }
 
@@ -815,7 +800,7 @@
 
       .modal {
         width: min(860px, 100%);
-        border-radius: 30px;
+        border-radius: 22px;
         background: var(--bg-elevated);
         border: 1px solid var(--line);
         box-shadow: var(--shadow);
@@ -871,7 +856,7 @@
       }
 
       .notice {
-        border-radius: 18px;
+        border-radius: 16px;
         padding: 14px 16px;
         background: rgba(245, 158, 11, 0.12);
         border: 1px solid rgba(245, 158, 11, 0.22);
@@ -899,11 +884,11 @@
 
       @media (max-width: 1180px) {
         .hero-grid,
-        .top-strip,
         .doughnut-wrap,
         .toolbar,
         .metric-grid,
-        .modal-body {
+        .modal-body,
+        .hero-summary {
           grid-template-columns: 1fr;
         }
 
@@ -933,7 +918,7 @@
 
         .hero {
           padding: 20px;
-          border-radius: 28px;
+          border-radius: 18px;
         }
 
         .surface-inner,
@@ -1150,7 +1135,7 @@
               <span className={`sync-dot ${isLive ? "" : "offline"}`}></span>
               <strong>{label}</strong>
             </div>
-            <p className="panel-copy" style={{ color: "rgba(255,255,255,0.78)", marginTop: 12 }}>{detail}</p>
+            <p className="panel-copy" style={{ marginTop: 12 }}>{detail}</p>
           </div>
         );
       }
@@ -1319,7 +1304,7 @@
       function ClockCard({ now }) {
         return (
           <div className="clock-card">
-            <div className="metric-eyebrow" style={{ color: "rgba(255,255,255,0.74)" }}>Ward Time</div>
+            <div className="metric-eyebrow">Ward Time</div>
             <div className="clock-time">{formatClock(now)}</div>
             <div className="clock-meta">{formatDayDate(now)}</div>
           </div>
@@ -1649,61 +1634,76 @@
           <div className="app-shell">
             <div className="page">
               <section className="hero fade-in">
-                <div className="top-strip">
-                  <div className="header-stack">
+                <div className="hero-grid">
+                  <div className="header-stack top-strip">
                     <div className="hero-kicker">
-                      <Icon size={16} stroke="white"><path d="M3 12h4l2.5-5 4 10 2.5-5H21"></path></Icon>
+                      <Icon size={16}><path d="M3 12h4l2.5-5 4 10 2.5-5H21"></path></Icon>
                       Rajendra Institute of Medical Sciences
                     </div>
                     <div>
                       <h1 className="hero-title">RIMS NICU Tracker</h1>
                       <p className="hero-copy">
-                        Live registry, DOL-based patient tracking, outcomes, printable monthly mortality reporting, and ward analytics in one organized surface.
+                        A simpler live workspace for admissions, patient status, and monthly NICU reporting.
                       </p>
                     </div>
-                    <div className="mini-tabs">
+                    <div className="section-nav">
                       {VIEW_MODES.map(mode => (
                         <button key={mode} className={`mini-tab ${viewMode === mode ? "active" : ""}`} onClick={() => setViewMode(mode)}>
                           {mode === "overview" ? "Overview" : mode === "tracker" ? "Live Tracker" : "Monthly Report"}
                         </button>
                       ))}
                     </div>
-                  </div>
-                  <ClockCard now={now} />
-                </div>
-                <div className="hero-grid">
-                  <div>
+                    <div className="hero-summary">
+                      <div className="summary-chip">
+                        <strong>{analytics.activeCount}</strong>
+                        <span>currently admitted</span>
+                      </div>
+                      <div className="summary-chip">
+                        <strong>{analytics.monthlyAdmissions}</strong>
+                        <span>admissions this month</span>
+                      </div>
+                      <div className="summary-chip">
+                        <strong>{analytics.monthlyOutcomes}</strong>
+                        <span>logged outcomes this month</span>
+                      </div>
+                    </div>
                     <div className="hero-actions">
-                      <button className="pill-button" onClick={() => setViewMode("tracker")}>Open Tracker</button>
-                      <button className="ghost-button" onClick={() => setViewMode("reports")}>Open Monthly Table</button>
+                      <button className="pill-button" onClick={openNewModal}>Add Patient</button>
+                      <button className="ghost-button" onClick={() => setViewMode("tracker")}>Open Tracker</button>
                       <button className="ghost-button" onClick={() => window.print()}>Print Monthly Report</button>
                     </div>
                   </div>
 
-                  <div className="status-panel">
-                    <div className="control-cluster">
-                      <ThemeToggle theme={theme} setTheme={setTheme} />
+                  <div className="hero-side">
+                    <div className="hero-panel">
+                      <div className="control-cluster">
+                        <div className="metric-eyebrow">Display</div>
+                        <ThemeToggle theme={theme} setTheme={setTheme} />
+                      </div>
+                      <ClockCard now={now} />
                     </div>
-                    <SyncIndicator
-                      isSyncing={isSyncing}
-                      user={user}
-                      connectionError={connectionError}
-                      lastUpdated={lastSnapshotAt ? `${lastSnapshotAt}` : ""}
-                    />
-                    <div className="status-card">
-                      <div className="metric-eyebrow" style={{ color: "rgba(255,255,255,0.72)" }}>Today at a glance</div>
-                      <h3 style={{ fontSize: 28, margin: "10px 0 6px" }}>{analytics.activeCount} babies currently active</h3>
-                      <p className="panel-copy" style={{ color: "rgba(255,255,255,0.78)" }}>
-                        {analytics.monthlyAdmissions} admissions recorded this month with {analytics.monthlyOutcomes} outcomes logged.
-                      </p>
-                      <div className="status-strip" style={{ marginTop: 16 }}>
-                        <div className="sync-chip">
-                          <strong>{analytics.mortalityRate}%</strong>
-                          <span style={{ color: "rgba(255,255,255,0.78)" }}>mortality rate</span>
-                        </div>
-                        <div className="sync-chip">
-                          <strong>{Math.round(analytics.averageStayHours || 0)}h</strong>
-                          <span style={{ color: "rgba(255,255,255,0.78)" }}>avg stay</span>
+                    <div className="status-panel">
+                      <SyncIndicator
+                        isSyncing={isSyncing}
+                        user={user}
+                        connectionError={connectionError}
+                        lastUpdated={lastSnapshotAt ? `${lastSnapshotAt}` : ""}
+                      />
+                      <div className="status-card">
+                        <div className="metric-eyebrow">Today at a glance</div>
+                        <h3 style={{ fontSize: 28, margin: "10px 0 6px" }}>{analytics.activeCount} babies currently active</h3>
+                        <p className="panel-copy">
+                          {analytics.monthlyAdmissions} admissions recorded this month with {analytics.monthlyOutcomes} outcomes logged.
+                        </p>
+                        <div className="status-strip" style={{ marginTop: 16 }}>
+                          <div className="sync-chip">
+                            <strong>{analytics.mortalityRate}%</strong>
+                            <span className="meta-text">mortality rate</span>
+                          </div>
+                          <div className="sync-chip">
+                            <strong>{Math.round(analytics.averageStayHours || 0)}h</strong>
+                            <span className="meta-text">avg stay</span>
+                          </div>
                         </div>
                       </div>
                     </div>
