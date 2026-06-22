@@ -1527,42 +1527,82 @@
           color: black !important;
         }
 
+        /* Hide all sections, filters, headers, buttons and sidebars */
         .hero,
+        .notice,
         .metric-grid,
-        .status-panel,
+        .analytics-grid > .surface:not(:last-child),
+        .split-header,
+        .report-filter-row,
+        .report-hint,
+        .table-toolbar,
         .tab-group,
         .toolbar,
         .report-actions,
         .mini-tabs,
-        .notice,
         .icon-button,
         .solid-button,
         .small-button,
         .pill-button,
-        .ghost-button {
+        .ghost-button,
+        .modal-overlay {
           display: none !important;
         }
 
-        .surface,
-        .patient-table-wrap,
-        .report-table td:first-child,
-        .report-table th:first-child {
-          background: white !important;
-          box-shadow: none !important;
-          border-color: #d1d5db !important;
+        /* Hide anything inside the report surface other than the table container */
+        .span-12.surface:last-of-type .surface-inner > *:not(.patient-table-wrap) {
+          display: none !important;
         }
 
-        th {
+        /* Reset layout containers for print layout */
+        .app-shell,
+        .page,
+        .analytics-grid,
+        .span-12.surface:last-of-type,
+        .surface-inner {
+          display: block !important;
+          background: white !important;
+          box-shadow: none !important;
+          border: none !important;
+          padding: 0 !important;
+          margin: 0 !important;
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+
+        /* Format report table container */
+        .patient-table-wrap {
+          display: block !important;
+          overflow: visible !important;
+          width: 100% !important;
+          max-width: 100% !important;
+          margin: 0 !important;
+          padding: 0 !important;
+          background: white !important;
+          box-shadow: none !important;
+          border: none !important;
+        }
+
+        /* Format report table and cells */
+        .report-table {
+          width: 100% !important;
+          min-width: 100% !important;
+          table-layout: auto !important;
+          border-collapse: collapse !important;
+        }
+
+        .report-table th,
+        .report-table td {
+          border: 1px solid #64748b !important;
+          background: white !important;
+          color: black !important;
+          font-size: 9px !important;
+          padding: 4px 3px !important;
           position: static !important;
         }
 
-        .page,
-        .analytics-grid {
-          display: block !important;
-        }
-
-        .span-12.surface:last-of-type {
-          break-inside: avoid;
+        th {
+          font-weight: bold !important;
         }
       }
     </style>
