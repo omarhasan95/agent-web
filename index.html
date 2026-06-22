@@ -770,7 +770,7 @@
       }
 
       .report-table {
-        min-width: 2200px;
+        min-width: 2400px;
       }
 
       .report-table th,
@@ -2322,10 +2322,14 @@
                 nicuDischargeCount: outcomes.filter(patient => patient.unit === "NICU" && patient.status === "Discharged").length,
                 sncuDischargeTA: sncuAdmissions.length,
                 sncuDischargeCount: outcomes.filter(patient => patient.unit === "SNCU" && patient.status === "Discharged").length,
-                lamaTA: admitted.length,
-                lamaCount: outcomes.filter(patient => patient.status === "LAMA").length,
-                transferTA: admitted.length,
-                transferCount: outcomes.filter(patient => patient.status === "Transferred").length,
+                nicuLamaTA: nicuAdmissions.length,
+                nicuLamaCount: outcomes.filter(patient => patient.unit === "NICU" && patient.status === "LAMA").length,
+                sncuLamaTA: sncuAdmissions.length,
+                sncuLamaCount: outcomes.filter(patient => patient.unit === "SNCU" && patient.status === "LAMA").length,
+                nicuTransferTA: nicuAdmissions.length,
+                nicuTransferCount: outcomes.filter(patient => patient.unit === "NICU" && patient.status === "Transferred").length,
+                sncuTransferTA: sncuAdmissions.length,
+                sncuTransferCount: outcomes.filter(patient => patient.unit === "SNCU" && patient.status === "Transferred").length,
                 admittedByDiagnosis,
                 deathsByDiagnosis,
                 mortalityRateByDiagnosis,
@@ -2511,10 +2515,14 @@
             "NICU Discharges",
             "SNCU Total Admissions for Discharge",
             "SNCU Discharges",
-            "LAMA Total Admissions",
-            "LAMA Count",
-            "Transfer Total Admissions",
-            "Transfer Count",
+            "NICU Total Admissions for LAMA",
+            "NICU LAMA Count",
+            "SNCU Total Admissions for LAMA",
+            "SNCU LAMA Count",
+            "NICU Total Admissions for Transfer",
+            "NICU Transfer Count",
+            "SNCU Total Admissions for Transfer",
+            "SNCU Transfer Count",
             "Pre Term Total Admitted",
             "Pre Term Deaths",
             "Pre Term Mortality %",
@@ -2535,7 +2543,7 @@
             "Deaths 8d-28d",
             "Deaths >28d"
           ];
-
+ 
           const rows = filteredReportRows.map(row => [
             row.month,
             row.detail.nicuDirect,
@@ -2549,10 +2557,14 @@
             row.detail.nicuDischargeCount,
             row.detail.sncuDischargeTA,
             row.detail.sncuDischargeCount,
-            row.detail.lamaTA,
-            row.detail.lamaCount,
-            row.detail.transferTA,
-            row.detail.transferCount,
+            row.detail.nicuLamaTA,
+            row.detail.nicuLamaCount,
+            row.detail.sncuLamaTA,
+            row.detail.sncuLamaCount,
+            row.detail.nicuTransferTA,
+            row.detail.nicuTransferCount,
+            row.detail.sncuTransferTA,
+            row.detail.sncuTransferCount,
             row.detail.admittedByDiagnosis["Pre Term"],
             row.detail.deathsByDiagnosis["Pre Term"],
             row.detail.admittedByDiagnosis["Pre Term"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Pre Term"]}%` : "—",
@@ -2887,8 +2899,8 @@
                               <th colSpan="3">Total No of Admission (NICU + SNCU)</th>
                               <th colSpan="4">Total No of Death</th>
                               <th colSpan="4">Discharge</th>
-                              <th colSpan="2">LAMA</th>
-                              <th colSpan="2">Transfer Out</th>
+                              <th colSpan="4">LAMA</th>
+                              <th colSpan="4">Transfer Out</th>
                               <th colSpan="15">Cause of Death (T.A / Death / %)</th>
                               <th colSpan="4">Death Timing</th>
                             </tr>
@@ -2900,10 +2912,10 @@
                               <th colSpan="2">SNCU</th>
                               <th colSpan="2">NICU</th>
                               <th colSpan="2">SNCU</th>
-                              <th rowSpan="2"><abbr title="Total admissions">T.A</abbr></th>
-                              <th rowSpan="2">Death</th>
-                              <th rowSpan="2"><abbr title="Total admissions">T.A</abbr></th>
-                              <th rowSpan="2">Death</th>
+                              <th colSpan="2">NICU</th>
+                              <th colSpan="2">SNCU</th>
+                              <th colSpan="2">NICU</th>
+                              <th colSpan="2">SNCU</th>
                               <th colSpan="3">Pre Term</th>
                               <th colSpan="3">Severe Birth Asphyxia</th>
                               <th colSpan="3">SEPSIS</th>
@@ -2920,9 +2932,17 @@
                               <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
                               <th><abbr title="Total admissions">T.A</abbr></th>
-                              <th>Death</th>
+                              <th>Disch</th>
                               <th><abbr title="Total admissions">T.A</abbr></th>
-                              <th>Death</th>
+                              <th>Disch</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
+                              <th>LAMA</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
+                              <th>LAMA</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
+                              <th>Trans</th>
+                              <th><abbr title="Total admissions">T.A</abbr></th>
+                              <th>Trans</th>
                               <th><abbr title="Total Admitted">T.A</abbr></th>
                               <th>Death</th>
                               <th>%</th>
@@ -2943,7 +2963,7 @@
                           <tbody>
                             {filteredReportRows.length === 0 ? (
                               <tr>
-                                <td colSpan="35" className="empty-state">No monthly report rows match the selected filters.</td>
+                                <td colSpan="39" className="empty-state">No monthly report rows match the selected filters.</td>
                               </tr>
                             ) : (
                               filteredReportRows.map(row => (
@@ -2960,10 +2980,14 @@
                                   <td>{row.detail.nicuDischargeCount}</td>
                                   <td>{row.detail.sncuDischargeTA}</td>
                                   <td>{row.detail.sncuDischargeCount}</td>
-                                  <td>{row.detail.lamaTA}</td>
-                                  <td>{row.detail.lamaCount}</td>
-                                  <td>{row.detail.transferTA}</td>
-                                  <td>{row.detail.transferCount}</td>
+                                  <td>{row.detail.nicuLamaTA}</td>
+                                  <td>{row.detail.nicuLamaCount}</td>
+                                  <td>{row.detail.sncuLamaTA}</td>
+                                  <td>{row.detail.sncuLamaCount}</td>
+                                  <td>{row.detail.nicuTransferTA}</td>
+                                  <td>{row.detail.nicuTransferCount}</td>
+                                  <td>{row.detail.sncuTransferTA}</td>
+                                  <td>{row.detail.sncuTransferCount}</td>
                                   <td>{row.detail.admittedByDiagnosis["Pre Term"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["Pre Term"]}</td>
                                   <td>{row.detail.admittedByDiagnosis["Pre Term"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Pre Term"]}%` : "—"}</td>
