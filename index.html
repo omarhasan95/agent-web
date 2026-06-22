@@ -770,7 +770,7 @@
       }
 
       .report-table {
-        min-width: 1780px;
+        min-width: 2200px;
       }
 
       .report-table th,
@@ -2262,8 +2262,18 @@
             const nicuAdmissions = admitted.filter(patient => patient.unit === "NICU");
             const sncuAdmissions = admitted.filter(patient => patient.unit === "SNCU");
             const deaths = outcomes.filter(patient => patient.status === "Died");
+            const admittedByDiagnosis = DIAGNOSIS_OPTIONS.reduce((acc, diagnosis) => {
+              acc[diagnosis] = admitted.filter(patient => (patient.diagnosis || "Others") === diagnosis).length;
+              return acc;
+            }, {});
             const deathsByDiagnosis = DIAGNOSIS_OPTIONS.reduce((acc, diagnosis) => {
               acc[diagnosis] = deaths.filter(patient => (patient.diagnosis || "Others") === diagnosis).length;
+              return acc;
+            }, {});
+            const mortalityRateByDiagnosis = DIAGNOSIS_OPTIONS.reduce((acc, diagnosis) => {
+              const adm = admittedByDiagnosis[diagnosis];
+              const dth = deathsByDiagnosis[diagnosis];
+              acc[diagnosis] = adm > 0 ? Math.round((dth / adm) * 100) : 0;
               return acc;
             }, {});
             const deathTimings = {
@@ -2316,7 +2326,9 @@
                 lamaCount: outcomes.filter(patient => patient.status === "LAMA").length,
                 transferTA: admitted.length,
                 transferCount: outcomes.filter(patient => patient.status === "Transferred").length,
+                admittedByDiagnosis,
                 deathsByDiagnosis,
+                mortalityRateByDiagnosis,
                 deathTimings
               }
             };
@@ -2503,11 +2515,21 @@
             "LAMA Count",
             "Transfer Total Admissions",
             "Transfer Count",
+            "Pre Term Total Admitted",
             "Pre Term Deaths",
+            "Pre Term Mortality %",
+            "Severe Birth Asphyxia Total Admitted",
             "Severe Birth Asphyxia Deaths",
+            "Severe Birth Asphyxia Mortality %",
+            "SEPSIS Total Admitted",
             "SEPSIS Deaths",
+            "SEPSIS Mortality %",
+            "RDS Total Admitted",
             "RDS Deaths",
-            "Other Deaths",
+            "RDS Mortality %",
+            "Others Total Admitted",
+            "Others Deaths",
+            "Others Mortality %",
             "Deaths <24 hrs",
             "Deaths 24h-7d",
             "Deaths 8d-28d",
@@ -2531,11 +2553,21 @@
             row.detail.lamaCount,
             row.detail.transferTA,
             row.detail.transferCount,
+            row.detail.admittedByDiagnosis["Pre Term"],
             row.detail.deathsByDiagnosis["Pre Term"],
+            row.detail.admittedByDiagnosis["Pre Term"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Pre Term"]}%` : "—",
+            row.detail.admittedByDiagnosis["Severe Birth Asphyxia"],
             row.detail.deathsByDiagnosis["Severe Birth Asphyxia"],
+            row.detail.admittedByDiagnosis["Severe Birth Asphyxia"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Severe Birth Asphyxia"]}%` : "—",
+            row.detail.admittedByDiagnosis["SEPSIS"],
             row.detail.deathsByDiagnosis["SEPSIS"],
+            row.detail.admittedByDiagnosis["SEPSIS"] > 0 ? `${row.detail.mortalityRateByDiagnosis["SEPSIS"]}%` : "—",
+            row.detail.admittedByDiagnosis["RDS"],
             row.detail.deathsByDiagnosis["RDS"],
+            row.detail.admittedByDiagnosis["RDS"] > 0 ? `${row.detail.mortalityRateByDiagnosis["RDS"]}%` : "—",
+            row.detail.admittedByDiagnosis["Others"],
             row.detail.deathsByDiagnosis["Others"],
+            row.detail.admittedByDiagnosis["Others"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Others"]}%` : "—",
             row.detail.deathTimings.lt24,
             row.detail.deathTimings.d1to7,
             row.detail.deathTimings.d8to28,
@@ -2857,7 +2889,7 @@
                               <th colSpan="4">Discharge</th>
                               <th colSpan="2">LAMA</th>
                               <th colSpan="2">Transfer Out</th>
-                              <th colSpan="5">Cause of Death (T.A / Death)</th>
+                              <th colSpan="15">Cause of Death (T.A / Death / %)</th>
                               <th colSpan="4">Death Timing</th>
                             </tr>
                             <tr>
@@ -2872,11 +2904,11 @@
                               <th rowSpan="2">Death</th>
                               <th rowSpan="2"><abbr title="Total admissions">T.A</abbr></th>
                               <th rowSpan="2">Death</th>
-                              <th rowSpan="2">Pre Term</th>
-                              <th rowSpan="2">Severe Birth Asphyxia</th>
-                              <th rowSpan="2">SEPSIS</th>
-                              <th rowSpan="2">RDS</th>
-                              <th rowSpan="2">Others</th>
+                              <th colSpan="3">Pre Term</th>
+                              <th colSpan="3">Severe Birth Asphyxia</th>
+                              <th colSpan="3">SEPSIS</th>
+                              <th colSpan="3">RDS</th>
+                              <th colSpan="3">Others</th>
                               <th rowSpan="2">&lt;24 hrs</th>
                               <th rowSpan="2">24h - 7d</th>
                               <th rowSpan="2">8d - 28d</th>
@@ -2891,12 +2923,27 @@
                               <th>Death</th>
                               <th><abbr title="Total admissions">T.A</abbr></th>
                               <th>Death</th>
+                              <th><abbr title="Total Admitted">T.A</abbr></th>
+                              <th>Death</th>
+                              <th>%</th>
+                              <th><abbr title="Total Admitted">T.A</abbr></th>
+                              <th>Death</th>
+                              <th>%</th>
+                              <th><abbr title="Total Admitted">T.A</abbr></th>
+                              <th>Death</th>
+                              <th>%</th>
+                              <th><abbr title="Total Admitted">T.A</abbr></th>
+                              <th>Death</th>
+                              <th>%</th>
+                              <th><abbr title="Total Admitted">T.A</abbr></th>
+                              <th>Death</th>
+                              <th>%</th>
                             </tr>
                           </thead>
                           <tbody>
                             {filteredReportRows.length === 0 ? (
                               <tr>
-                                <td colSpan="25" className="empty-state">No monthly report rows match the selected filters.</td>
+                                <td colSpan="35" className="empty-state">No monthly report rows match the selected filters.</td>
                               </tr>
                             ) : (
                               filteredReportRows.map(row => (
@@ -2917,11 +2964,21 @@
                                   <td>{row.detail.lamaCount}</td>
                                   <td>{row.detail.transferTA}</td>
                                   <td>{row.detail.transferCount}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Pre Term"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["Pre Term"]}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Pre Term"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Pre Term"]}%` : "—"}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Severe Birth Asphyxia"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["Severe Birth Asphyxia"]}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Severe Birth Asphyxia"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Severe Birth Asphyxia"]}%` : "—"}</td>
+                                  <td>{row.detail.admittedByDiagnosis["SEPSIS"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["SEPSIS"]}</td>
+                                  <td>{row.detail.admittedByDiagnosis["SEPSIS"] > 0 ? `${row.detail.mortalityRateByDiagnosis["SEPSIS"]}%` : "—"}</td>
+                                  <td>{row.detail.admittedByDiagnosis["RDS"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["RDS"]}</td>
+                                  <td>{row.detail.admittedByDiagnosis["RDS"] > 0 ? `${row.detail.mortalityRateByDiagnosis["RDS"]}%` : "—"}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Others"]}</td>
                                   <td>{row.detail.deathsByDiagnosis["Others"]}</td>
+                                  <td>{row.detail.admittedByDiagnosis["Others"] > 0 ? `${row.detail.mortalityRateByDiagnosis["Others"]}%` : "—"}</td>
                                   <td>{row.detail.deathTimings.lt24}</td>
                                   <td>{row.detail.deathTimings.d1to7}</td>
                                   <td>{row.detail.deathTimings.d8to28}</td>
