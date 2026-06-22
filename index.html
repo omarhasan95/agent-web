@@ -1569,7 +1569,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/babel" data-presets="react">
+    <script type="text/plain" id="app-source">
       const { useEffect, useMemo, useState } = React;
 
       const firebaseConfig = {
@@ -3148,6 +3148,13 @@
 
       const root = ReactDOM.createRoot(document.getElementById("root"));
       root.render(<App />);
+    </script>
+    <script>
+      const appSource = document.getElementById("app-source").textContent;
+      const transformedApp = Babel.transform(appSource, {
+        plugins: [["transform-react-jsx", { runtime: "classic" }]]
+      }).code;
+      Function(transformedApp)();
     </script>
   </body>
 </html>
